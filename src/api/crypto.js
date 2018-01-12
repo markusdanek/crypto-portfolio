@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import { getJsonBody } from './utils';
 
+const apiUrl = 'http://cryptocoin-api.herokuapp.com'
+
 export function getByUrl(url) {
     return new Promise((resolve, reject)=>{
         Vue.http.get(url).then((res)=>{
@@ -13,12 +15,13 @@ export function getByUrl(url) {
 
 export function getPrice(crypto) {
     return new Promise((resolve, reject) => {
-        Vue.http.get('/price/', {
+        Vue.http.get(apiUrl + '/price/', {
             params: {
                 crypto: crypto
             }
         }).then((result) => {
-            resolve(JSON.parse(result.body));
+            // resolve(JSON.parse(result.body));
+            resolve(result);
         }).catch((err) => {
             reject(err);
         });
