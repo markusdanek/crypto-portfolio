@@ -26,21 +26,7 @@
 
 <script>
   import Datepicker from 'vuejs-datepicker';
-
-  const STORAGE_KEY = 'cryptocoin-portfolio'
-  let cryptostorage = {
-    fetch: function () {
-      let cryptos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
-      cryptos.forEach(function (crypto, index) {
-        crypto.id = index
-      })
-      cryptostorage.uid = cryptos.length
-      return cryptos
-    },
-    save: function (cryptos) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(cryptos))
-    }
-  }
+  import { cryptostorage } from '../api/utils';
 
   let filters = {
     all: function (cryptos) {
@@ -99,13 +85,6 @@
       },
       removecrypto: function (crypto) {
         this.cryptos.splice(this.cryptos.indexOf(crypto), 1)
-      }
-    },
-    directives: {
-      'crypto-focus': function (el, binding) {
-        if (binding.value) {
-          el.focus()
-        }
       }
     },
     components: {

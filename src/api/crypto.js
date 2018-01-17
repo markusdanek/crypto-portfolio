@@ -72,7 +72,22 @@ export function getMonthly(crypto) {
 
 export function getPortfolio() {
     return new Promise((resolve, reject) => {
-        Vue.http.get('/value/', {
+        Vue.http.get('/portfolio/', {
+        }).then((result) => {
+            resolve(JSON.parse(result.body));
+        }).catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+export function getPriceForTimestamp() {
+    return new Promise((resolve, reject) => {
+      Vue.http.get('/historicprice/', {
+          params: {
+              crypto: crypto,
+              day: day
+          }
         }).then((result) => {
             resolve(JSON.parse(result.body));
         }).catch((err) => {
