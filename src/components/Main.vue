@@ -1,14 +1,19 @@
 <template>
   <div>
-    <input autofocus autocomplete="off" placeholder="Cryptocurreny" v-model="newcrypto">
-    <input autocomplete="off" placeholder="How much?" v-model="newcrypto2" @keyup.enter="addcrypto">
+
+    <!-- <pre>{{ $data }}</pre> -->
+
+    <input autofocus autocomplete="off" placeholder="Crypto name" v-model="newcrypto">
+    <input autocomplete="off" placeholder="Amount" v-model="cryptoAmount" @keyup.enter="addcrypto">
+    <datepicker v-model="cryptoDate" name="cryptoDate" placeholder="Date of purchase"></datepicker>
+
     <button type="button" name="button" @click="addcrypto">Add</button>
 
     <section v-show="cryptos.length" v-cloak>
       <ul class="todo-list">
         <li v-for="crypto in filteredcryptos" :key="crypto.id">
           <div>
-            <label>{{ crypto.title }} - {{ crypto.amount }}</label>
+            <label>{{ crypto.title }} (Amount: {{ crypto.amount }}, Date: {{ crypto.date }})</label>
             <button class="destroy" @click="removecrypto(crypto)"></button>
           </div>
         </li>
@@ -20,10 +25,12 @@
 </template>
 
 <script>
-  var STORAGE_KEY = 'cryptocurrency'
-  var cryptostorage = {
+  import Datepicker from 'vuejs-datepicker';
+
+  const STORAGE_KEY = 'cryptocoin-portfolio'
+  let cryptostorage = {
     fetch: function () {
-      var cryptos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+      let cryptos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
       cryptos.forEach(function (crypto, index) {
         crypto.id = index
       })
@@ -35,7 +42,7 @@
     }
   }
 
-  var filters = {
+  let filters = {
     all: function (cryptos) {
       return cryptos
     }
@@ -48,7 +55,8 @@
       return {
         cryptos: cryptostorage.fetch(),
         newcrypto: '',
-        newcrypto2: '',
+        cryptoAmount: '',
+        cryptoDate: '',
         editedcrypto: null,
         visibility: 'all'
       }
@@ -73,17 +81,21 @@
     },
     methods: {
       addcrypto: function () {
-        var value = this.newcrypto && this.newcrypto.trim()
-        var amount = this.newcrypto2 && this.newcrypto2.trim()
-        if (!value) {
+        let title = this.newcrypto && this.newcrypto.trim()
+        let amount = this.cryptoAmount && this.cryptoAmount.trim()
+        let date = this.cryptoDate
+        if (!title) {
           return
         }
         this.cryptos.push({
           id: cryptostorage.uid++,
-          title: value,
-          amount: amount
+          title: title,
+          amount: amount,
+          date: date
         })
         this.newcrypto = ''
+        this.cryptoAmount = ''
+        this.cryptoDate = ''
       },
       removecrypto: function (crypto) {
         this.cryptos.splice(this.cryptos.indexOf(crypto), 1)
@@ -95,6 +107,9 @@
           el.focus()
         }
       }
+    },
+    components: {
+      Datepicker
     }
   }
 </script>

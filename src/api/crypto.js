@@ -20,8 +20,7 @@ export function getPrice(crypto) {
                 crypto: crypto
             }
         }).then((result) => {
-            // resolve(JSON.parse(result.body));
-            resolve(result);
+            resolve(getJsonBody(result.body.USD));
         }).catch((err) => {
             reject(err);
         });

@@ -10,8 +10,15 @@
     name: 'test',
     data () {
       return {
-        cryptocurrency: getPrice('ETH')
+        cryptoPrice: []
       }
+    },
+    created() {
+      getPrice('ETH').then((res)=>{
+          this.cryptoPrice = res;
+        }).catch((err)=>{
+            return err;
+        });
     }
   }
 </script>
