@@ -29,7 +29,7 @@ export function getPrice(crypto) {
 
 export function getValue(crypto, coins) {
     return new Promise((resolve, reject) => {
-        Vue.http.get('/value/', {
+        Vue.http.get(apiUrl + '/value/', {
             params: {
                 crypto: crypto,
                 coins: coins
@@ -44,7 +44,7 @@ export function getValue(crypto, coins) {
 
 export function getDaily(crypto) {
     return new Promise((resolve, reject) => {
-        Vue.http.get('/daily/', {
+        Vue.http.get(apiUrl + '/daily/', {
             params: {
                 crypto: crypto
             }
@@ -58,7 +58,7 @@ export function getDaily(crypto) {
 
 export function getMonthly(crypto) {
     return new Promise((resolve, reject) => {
-        Vue.http.get('/value/', {
+        Vue.http.get(apiUrl + '/value/', {
             params: {
                 crypto: crypto
             }
@@ -72,7 +72,7 @@ export function getMonthly(crypto) {
 
 export function getPortfolio() {
     return new Promise((resolve, reject) => {
-        Vue.http.get('/portfolio/', {
+        Vue.http.get(apiUrl + '/portfolio/', {
         }).then((result) => {
             resolve(JSON.parse(result.body));
         }).catch((err) => {
@@ -81,15 +81,15 @@ export function getPortfolio() {
     });
 }
 
-export function getPriceForTimestamp() {
+export function getPriceForTimestamp(crypto, day) {
     return new Promise((resolve, reject) => {
-      Vue.http.get('/historicprice/', {
+      Vue.http.get(apiUrl + '/historicprice/', {
           params: {
               crypto: crypto,
               day: day
           }
         }).then((result) => {
-            resolve(JSON.parse(result.body));
+            resolve(JSON.parse(result.body.USD));
         }).catch((err) => {
             reject(err);
         });
