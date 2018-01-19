@@ -34,10 +34,17 @@
 
           let historicPrice = getPriceForTimestamp(cryptoName, cryptoDate);
           Promise.all([historicPrice]).then((values) => {
-            // this.cryptoLocalStorage[i].purchaseDatePrice = values[0];
             Vue.set(this.cryptoLocalStorage[i], 'purchaseDatePrice', values[0])
           }).catch(e => console.error(e));
         }
+      }
+    },
+    watch: {
+      cryptoLocalStorage: {
+        handler: function (cryptoLocalStorage) {
+          cryptostorage.save(cryptoLocalStorage)
+        },
+        deep: true
       }
     },
     created() {
