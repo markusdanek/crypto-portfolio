@@ -5,6 +5,7 @@
 </template>
 
 <script>
+  import Vue from 'vue';
   import { getPrice, getPriceForTimestamp } from '../api/crypto';
   import { cryptostorage } from '../api/utils';
 
@@ -12,9 +13,7 @@
     name: 'test',
     data () {
       return {
-        cryptoPrice: [],
-        cryptoLocalStorage: cryptostorage.fetch(),
-        cryptoAmount: []
+        cryptoLocalStorage: cryptostorage.fetch()
       }
     },
     computed: {
@@ -28,17 +27,16 @@
     },
     methods: {
       getPriceForAmount() {
-        console.log("getPriceForAmount");
-        for (var i = 0; i < this.cryptoLocalStorage.length; i++) {
+        for (let i = 0; i < this.cryptoLocalStorage.length; i++) {
           let cryptoName = this.cryptoLocalStorage[i].title;
-          // let cryptoAmount = this.cryptoLocalStorage[i].amount;
           let cryptoDate = this.cryptoLocalStorage[i].date;
-          getPriceForTimestamp(cryptoName, cryptoDate).then((res)=>{
-              console.log("getPriceForTimestamp");
-              this.cryptoAmount = res;
-            }).catch((err)=>{
-                return err;
-          });
+          let cryptoAmount = this.cryptoLocalStorage[i].amount;
+
+          let historicPrice = getPriceForTimestamp(cryptoName, cryptoDate);
+          Promise.all([historicPrice]).then((values) => {
+            // this.cryptoLocalStorage[i].purchaseDatePrice = values[0];
+            Vue.set(this.cryptoLocalStorage[i], 'purchaseDatePrice', values[0])
+          }).catch(e => console.error(e));
         }
       }
     },

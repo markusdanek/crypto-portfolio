@@ -2,6 +2,7 @@ import Vue from 'vue';
 import { getJsonBody } from './utils';
 
 const apiUrl = 'http://cryptocoin-api.herokuapp.com'
+const devUrl = 'http://localhost:9001'
 
 export function getByUrl(url) {
     return new Promise((resolve, reject)=>{
@@ -15,7 +16,7 @@ export function getByUrl(url) {
 
 export function getPrice(crypto) {
     return new Promise((resolve, reject) => {
-        Vue.http.get(apiUrl + '/price/', {
+        Vue.http.get(apiUrl + '/price', {
             params: {
                 crypto: crypto
             }
@@ -29,7 +30,7 @@ export function getPrice(crypto) {
 
 export function getValue(crypto, coins) {
     return new Promise((resolve, reject) => {
-        Vue.http.get(apiUrl + '/value/', {
+        Vue.http.get(apiUrl + '/value', {
             params: {
                 crypto: crypto,
                 coins: coins
@@ -44,7 +45,7 @@ export function getValue(crypto, coins) {
 
 export function getDaily(crypto) {
     return new Promise((resolve, reject) => {
-        Vue.http.get(apiUrl + '/daily/', {
+        Vue.http.get(apiUrl + '/daily', {
             params: {
                 crypto: crypto
             }
@@ -58,7 +59,7 @@ export function getDaily(crypto) {
 
 export function getMonthly(crypto) {
     return new Promise((resolve, reject) => {
-        Vue.http.get(apiUrl + '/value/', {
+        Vue.http.get(apiUrl + '/value', {
             params: {
                 crypto: crypto
             }
@@ -72,7 +73,7 @@ export function getMonthly(crypto) {
 
 export function getPortfolio() {
     return new Promise((resolve, reject) => {
-        Vue.http.get(apiUrl + '/portfolio/', {
+        Vue.http.get(apiUrl + '/portfolio', {
         }).then((result) => {
             resolve(JSON.parse(result.body));
         }).catch((err) => {
@@ -83,7 +84,7 @@ export function getPortfolio() {
 
 export function getPriceForTimestamp(crypto, day) {
     return new Promise((resolve, reject) => {
-      Vue.http.get(apiUrl + '/historicprice/', {
+      Vue.http.get(devUrl + '/historicprice', {
           params: {
               crypto: crypto,
               day: day
