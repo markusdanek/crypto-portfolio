@@ -84,7 +84,7 @@ export function getPortfolio() {
 
 export function getPriceForTimestamp(crypto, day) {
     return new Promise((resolve, reject) => {
-      Vue.http.get(devUrl + '/historicprice', {
+      Vue.http.get(apiUrl + '/historicprice', {
           params: {
               crypto: crypto,
               day: day

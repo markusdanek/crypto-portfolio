@@ -29,12 +29,12 @@
       getPriceForAmount() {
         for (let i = 0; i < this.cryptoLocalStorage.length; i++) {
           let cryptoName = this.cryptoLocalStorage[i].title;
-          let cryptoDate = this.cryptoLocalStorage[i].date;
+          let cryptoDate = this.cryptoLocalStorage[i].purchaseDate;
           let cryptoAmount = this.cryptoLocalStorage[i].amount;
 
           let historicPrice = getPriceForTimestamp(cryptoName, cryptoDate);
           Promise.all([historicPrice]).then((values) => {
-            Vue.set(this.cryptoLocalStorage[i], 'purchaseDatePrice', values[0])
+            Vue.set(this.cryptoLocalStorage[i], 'purchaseDatePrice', values[0]);
           }).catch(e => console.error(e));
         }
       }
@@ -47,7 +47,7 @@
         deep: true
       }
     },
-    created() {
+    mounted() {
         this.getPriceForAmount();
     }
   }
