@@ -113,10 +113,10 @@
           let priceYesterday = getPriceForTimestamp(cryptoName, timestamp);
           Promise.all([priceYesterday]).then((values) => {
             yesterdayUSD.push(values[0]);
-            return yesterdayUSD;
+            console.log("values", values);
           }).catch(e => console.error(e));
         }
-        console.log(yesterdayUSD);
+        console.log("yesterdayUSD", yesterdayUSD);
       }
     },
     components: {
