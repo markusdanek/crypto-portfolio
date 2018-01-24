@@ -42,7 +42,8 @@
         newcrypto: '',
         cryptoAmount: '',
         cryptoDate: '',
-        portfolioValue: ''
+        portfolioValue: '',
+        cryptoValueYesterday: ''
       }
     },
     watch: {
@@ -104,19 +105,29 @@
         }
       },
       getPriceForYesterday(){
-        let yesterdayUSD = [];
-        for (let i = 0; i < this.cryptos.length; i++) {
-          let cryptoName = this.cryptos[i].title;
-          let timestamp = new Date(this.cryptos[i].purchaseDate);
-          timestamp.setDate(timestamp.getDate() - 1);
-          timestamp = timestamp.toISOString();
-          let priceYesterday = getPriceForTimestamp(cryptoName, timestamp);
-          Promise.all([priceYesterday]).then((values) => {
-            yesterdayUSD.push(values[0]);
-            console.log("values", values);
-          }).catch(e => console.error(e));
-        }
-        console.log("yesterdayUSD", yesterdayUSD);
+          let yesterdayUSD = [];
+          let promises = [];
+
+          for (let i = 0; i < this.cryptos.length; i++) {
+              let cryptoName = this.cryptos[i].title;
+              let timestamp = new Date(this.cryptos[i].purchaseDate);
+              timestamp.setDate(timestamp.getDate() - 1);
+              timestamp = timestamp.toISOString();
+
+              let priceYesterday = getPriceForTimestamp(cryptoName, timestamp)
+                  .then((values) => {
+                      console.log("values", values)
+                      yesterdayUSD.push(values[0]);
+                  })
+                  .catch(e => console.error(e));
+
+              promises.push(priceYesterday);
+          }
+
+          Promise.all(promises).finally(() => {
+              console.log("yesterdayUSD", yesterdayUSD);
+              console.log("yesterdayUSD[0]", yesterdayUSD[0]);
+          });
       }
     },
     components: {
