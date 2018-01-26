@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '../components/Main'
-import Test from '../components/Test'
+import PortfolioValue from '../components/PortfolioValue'
 
 Vue.use(Router)
 
@@ -13,9 +13,9 @@ export default new Router({
       component: Main
     },
     {
-      path: '/Test',
-      name: 'Test',
-      component: Test
+      path: '/portfolio',
+      name: 'Portfolio',
+      component: PortfolioValue
     }
   ]
 })

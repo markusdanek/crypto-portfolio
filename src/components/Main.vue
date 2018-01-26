@@ -20,9 +20,7 @@
       </ul>
     </section>
 
-    <section>
-      Portfolio value in USD: {{ portfolioValue }}
-    </section>
+    <portfolioValue></portfolioValue>
 
   </div>
 </template>
@@ -32,6 +30,7 @@
   import Datepicker from 'vuejs-datepicker';
   import { getPrice, getPriceForTimestamp } from '../api/crypto';
   import { cryptostorage } from '../api/utils';
+  import PortfolioValue from '@/components/PortfolioValue'
 
   export default {
     name: 'Main',
@@ -42,8 +41,6 @@
         newcrypto: '',
         cryptoAmount: '',
         cryptoDate: '',
-
-        portfolioValue: '',
       }
     },
     watch: {
@@ -95,47 +92,53 @@
             value = parseInt(cryptoAmount * cryptoPrice);
             cryptoValue+=value;
           }
-          Vue.set(this.cryptos[i], 'valueInUSD', value);
-        }
-      },
-      calcCryptoValue(){
-        this.portfolioValue = 0;
-        for (let i = 0; i < this.cryptos.length; i++) {
-          this.portfolioValue+=this.cryptos[i].valueInUSD;
+          Vue.set(this.cryptos[i], 'purchaseValueInUSD', value);
         }
       },
       getPriceForYesterday(){
           let yesterdayUSD = [];
+          let todayUSD = [];
           let promises = [];
 
           for (let i = 0; i < this.cryptos.length; i++) {
-              let timestamp = new Date(this.cryptos[i].purchaseDate);
-              timestamp.setDate(timestamp.getDate() - 1);
-              timestamp = timestamp.toISOString();
+              let today = new Date();
+              let yesterday = new Date(today.getDate() - 1);
+              yesterday = yesterday.toISOString();
 
-              let priceYesterday = getPriceForTimestamp(this.cryptos[i].title, timestamp)
+              let priceYesterday = getPriceForTimestamp(this.cryptos[i].title, yesterday)
                   .then((values) => {
-                      // console.log(values);
-                      yesterdayUSD.push(values);
+                    console.log(yesterdayUSD);
+                    yesterdayUSD.push(values);
+                  })
+                  .catch(e => console.error(e));
+
+              promises.push(priceYesterday);
+              console.log(promises);
+
+              let pricetoday = getPriceForTimestamp(this.cryptos[i].title, today)
+                  .then((values) => {
+                      console.log(todayUSD);
+                      todayUSD.push(values);
                   })
                   .catch(e => console.error(e));
               promises.push(priceYesterday);
+              console.log(promises);
           }
 
           Promise.all(promises).finally(() => {
               // console.log("yesterdayUSD", yesterdayUSD);
-              // console.log("yesterdayUSD[0]", yesterdayUSD[0]);
-              return yesterdayUSD;
+              // console.log("todayUSD", todayUSD);
+
           });
       }
     },
     components: {
-      Datepicker
+      Datepicker,
+      PortfolioValue
     },
     mounted() {
       this.getHistoricPrice();
       this.getPriceForAmount();
-      this.calcCryptoValue();
       this.getPriceForYesterday();
     }
   }
