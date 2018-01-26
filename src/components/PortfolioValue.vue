@@ -18,14 +18,6 @@
         portfolioValue: '',
       }
     },
-    watch: {
-      cryptos: {
-        handler(cryptos) {
-          cryptostorage.save(cryptos)
-        },
-        deep: true
-      }
-    },
     methods: {
       calcCryptoValue(){
         this.portfolioValue = 0;

@@ -40,7 +40,7 @@
         cryptos: cryptostorage.fetch(),
         newcrypto: '',
         cryptoAmount: '',
-        cryptoDate: '',
+        cryptoDate: ''
       }
     },
     watch: {
@@ -95,41 +95,34 @@
           Vue.set(this.cryptos[i], 'purchaseValueInUSD', value);
         }
       },
-      getPriceForYesterday(){
-          let yesterdayUSD = [];
-          let todayUSD = [];
-          let promises = [];
-
-          for (let i = 0; i < this.cryptos.length; i++) {
-              let today = new Date();
-              let yesterday = new Date(today.getDate() - 1);
-              yesterday = yesterday.toISOString();
-
-              let priceYesterday = getPriceForTimestamp(this.cryptos[i].title, yesterday)
-                  .then((values) => {
-                    console.log(yesterdayUSD);
-                    yesterdayUSD.push(values);
-                  })
-                  .catch(e => console.error(e));
-
-              promises.push(priceYesterday);
-              console.log(promises);
-
-              let pricetoday = getPriceForTimestamp(this.cryptos[i].title, today)
-                  .then((values) => {
-                      console.log(todayUSD);
-                      todayUSD.push(values);
-                  })
-                  .catch(e => console.error(e));
-              promises.push(priceYesterday);
-              console.log(promises);
-          }
-
-          Promise.all(promises).finally(() => {
-              // console.log("yesterdayUSD", yesterdayUSD);
-              // console.log("todayUSD", todayUSD);
-
+      getPriceForToday(){
+        let priceToday = [];
+        for (let i = 0; i < this.cryptos.length; i++) {
+          let priceTodayPromise = getPrice(this.cryptos[i].title)
+            .then((values)=>{
+              priceToday.push(values);
+              Vue.set(this.cryptos[i], 'priceToday', values);
+            }).catch((err)=>{
+                return err;
           });
+        }
+      },
+      getPriceForYesterday(){
+        let priceYesterday = [];
+        for (let i = 0; i < this.cryptos.length; i++) {
+          let today = new Date();
+          let yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          yesterday = yesterday.toISOString();
+
+          let priceYesterdayPromise = getPriceForTimestamp(this.cryptos[i].title, yesterday)
+            .then((values) => {
+              priceYesterday.push(values);
+              Vue.set(this.cryptos[i], 'priceYesterday', values);
+            }).catch((err)=>{
+                return err;
+          });
+        }
       }
     },
     components: {
@@ -139,6 +132,7 @@
     mounted() {
       this.getHistoricPrice();
       this.getPriceForAmount();
+      this.getPriceForToday();
       this.getPriceForYesterday();
     }
   }
