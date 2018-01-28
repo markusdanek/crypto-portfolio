@@ -37,7 +37,7 @@
         }
         console.log("today", decreaseValue);
         console.log("today pct", decreaseValuePct);
-        // this.differenceToday = decreaseValue.reduce((pv, cv) => pv+cv, 0);
+        this.differenceToday = decreaseValue.reduce((pv, cv) => pv+cv, 0);
       },
       differenceForYesterday() {
         let decreaseValue = [];
@@ -50,8 +50,8 @@
           decreaseValue.push(valueUSD);
           decreaseValuePct.push(diffInPct);
         }
-        console.log("yesterday", decreaseValue);
-        console.log("yesterday pct", decreaseValuePct);
+        // console.log("yesterday", decreaseValue);
+        // console.log("yesterday pct", decreaseValuePct);
         // this.differenceToday = decreaseValue.reduce((pv, cv) => pv+cv, 0);
       }
     },

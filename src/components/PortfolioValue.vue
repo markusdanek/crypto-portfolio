@@ -1,7 +1,23 @@
 <template>
   <div>
     <section>
-      Portfolio value in USD: {{ portfolioValue }}
+      Purchase portfolio value: {{ portfolioValuePurchase }}
+      <br>
+      Portfolio value today: {{ portfolioValueToday }}
+        <span v-if="portfolioValueTodayPercent > 0">
+          (-{{ portfolioValueTodayPercent }})
+        </span>
+        <span v-else>
+          (+{{ portfolioValueTodayPercent }})
+        </span>
+      <br>
+      Portfolio value yesterday: {{ portfolioValueYesterday }}
+        <span v-if="portfolioValueYesterdayPercent > 0">
+          (-{{ portfolioValueYesterdayPercent }})
+        </span>
+        <span v-else>
+          (+{{ portfolioValueYesterdayPercent }})
+        </span>
     </section>
   </div>
 </template>
@@ -15,19 +31,46 @@
     data () {
       return {
         cryptos: cryptostorage.fetch(),
-        portfolioValue: '',
+        portfolioValuePurchase: '',
+
+        portfolioValueToday: '',
+        portfolioValueTodayPercent: '',
+
+        portfolioValueYesterday: '',
+        portfolioValueYesterdayPercent: ''
       }
     },
+    props: ['portfolio'],
     methods: {
-      calcCryptoValue(){
-        this.portfolioValue = 0;
+      valuePortfolioPurchase(){
+        this.portfolioValuePurchase = 0;
         for (let i = 0; i < this.cryptos.length; i++) {
-          this.portfolioValue+=this.cryptos[i].purchaseValueInUSD;
+          this.portfolioValuePurchase+=this.cryptos[i].purchaseValueInUSD;
         }
+      },
+      valuePortfolioToday(){
+        this.portfolioValueToday = 0;
+        for (let i = 0; i < this.cryptos.length; i++) {
+          let amountTodayDollar = this.cryptos[i].priceToday * this.cryptos[i].amount;
+          this.portfolioValueToday+=amountTodayDollar;
+        }
+        let valueUSD = this.portfolioValuePurchase - this.portfolioValueToday;
+        this.portfolioValueTodayPercent = (valueUSD / this.portfolioValueToday) * 100;
+      },
+      valuePortfolioYesterday(){
+        this.portfolioValueYesterday = 0;
+        for (let i = 0; i < this.cryptos.length; i++) {
+          let amountYesterdayDollar = this.cryptos[i].priceYesterday * this.cryptos[i].amount;
+          this.portfolioValueYesterday+=amountYesterdayDollar;
+        }
+        let valueUSD = this.portfolioValueToday - this.portfolioValueYesterday;
+        this.portfolioValueYesterdayPercent = (valueUSD / this.portfolioValueYesterday) * 100;
       }
     },
     mounted() {
-      this.calcCryptoValue();
+      this.valuePortfolioPurchase();
+      this.valuePortfolioToday();
+      this.valuePortfolioYesterday();
     }
   }
 </script>
