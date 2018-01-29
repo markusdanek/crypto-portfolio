@@ -4,8 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
+import lodash from 'lodash'
+import VueLodash from 'vue-lodash'
 
-Vue.use(VueResource);
+Vue.use(VueResource, VueLodash, lodash);
 
 Vue.config.productionTip = false
 

@@ -25,3 +25,12 @@ export let cryptostorage = {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cryptos))
   }
 }
+
+// export function Array.prototype.groupBy(prop) {
+//   return this.reduce(function(groups, item) {
+//     var val = item[prop];
+//     groups[val] = groups[val] || [];
+//     groups[val].push(item);
+//     return groups;
+//   }, {});
+// }

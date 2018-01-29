@@ -26,6 +26,16 @@
 </template>
 
 <script>
+
+  Array.prototype.groupBy = function(prop) {
+    return this.reduce(function(groups, item) {
+      var val = item[prop];
+      groups[val] = groups[val] || [];
+      groups[val].push(item);
+      return groups;
+    }, {});
+  }
+
   import Vue from 'vue';
   import Datepicker from 'vuejs-datepicker';
   import { getPrice, getPriceForTimestamp } from '../api/crypto';
@@ -40,7 +50,8 @@
         cryptos: cryptostorage.fetch(),
         newcrypto: '',
         cryptoAmount: '',
-        cryptoDate: ''
+        cryptoDate: '',
+        cryptoGrouped: ''
       }
     },
     watch: {
@@ -52,6 +63,14 @@
       }
     },
     methods: {
+      groupBy(prop) {
+        return this.reduce(function(groups, item) {
+          var val = item[prop];
+          groups[val] = groups[val] || [];
+          groups[val].push(item);
+          return groups;
+        }, {});
+      },
       addCrypto() {
         let title = this.newcrypto && this.newcrypto.trim();
         let amount = this.cryptoAmount && this.cryptoAmount.trim();
@@ -81,6 +100,8 @@
             Vue.set(this.cryptos[i], 'purchaseDatePrice', values[0]);
           }).catch(e => console.error(e));
         }
+        this.cryptoGrouped = this.cryptos.groupBy('title');
+        console.log(this.cryptos.groupBy('title'));
       },
       getPriceForAmount(){
         let cryptoValue = 0;

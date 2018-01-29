@@ -11,7 +11,9 @@
     "upload": "npm run build; s3-deploy './dist/**' --cwd './dist/' --signatureVersion v4 --bucket www.mycryptocoins.cc"
   },
   "dependencies": {
+    "lodash": "^4.17.4",
     "vue": "^2.5.2",
+    "vue-lodash": "^1.0.4",
     "vue-resource": "^1.3.5",
     "vue-router": "^3.0.1",
     "vuejs-datepicker": "^0.9.24"
