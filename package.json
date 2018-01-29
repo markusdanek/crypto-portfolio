@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "upload": "npm run build; s3-deploy './dist/**' --cwd './dist/' --signatureVersion v4 --bucket www.mycryptocoins.cc"
   },
   "dependencies": {
     "vue": "^2.5.2",
@@ -40,6 +41,7 @@
     "postcss-loader": "^2.0.8",
     "postcss-url": "^7.2.1",
     "rimraf": "^2.6.0",
+    "s3-deploy": "^0.8.0",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
     "uglifyjs-webpack-plugin": "^1.1.1",
