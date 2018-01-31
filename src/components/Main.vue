@@ -101,7 +101,6 @@
           }).catch(e => console.error(e));
         }
         this.cryptoGrouped = this.cryptos.groupBy('title');
-        console.log(this.cryptos.groupBy('title'));
       },
       getPriceForAmount(){
         let cryptoValue = 0;
