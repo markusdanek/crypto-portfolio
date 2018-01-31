@@ -55,6 +55,11 @@ export let personalCoins = [{
   "purchaseDate": "2018-01-08T13:22:00.000Z"
 }, {
   "id": 11,
+  "title": "XRB",
+  "amount": "2.020931",
+  "purchaseDate": "2018-01-31T17:23:00.000Z"
+}, {
+  "id": 12,
   "title": "NAS",
   "amount": "9.7466676",
   "purchaseDate": "2018-01-16T13:22:00.000Z"
