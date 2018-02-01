@@ -31,7 +31,7 @@
           let sumTemp = [];
           for (var j = 0; j < this.test1[coinTitle[i]].length; j++) {
             let currentTitle = this.test1[coinTitle[i]][j].title;
-            let purchaseValue = this.test1[coinTitle[i]][j].purchaseValueInUSD
+            let purchaseValue = this.test1[coinTitle[i]][j].purchaseValueFiat;
             sumTemp.push(purchaseValue);
             sum = sumTemp.reduce((pv, cv) => pv+cv, 0);
           }

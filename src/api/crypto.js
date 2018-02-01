@@ -14,26 +14,28 @@ export function getByUrl(url) {
     });
 }
 
-export function getPrice(crypto) {
+export function getPrice(crypto, currency) {
     return new Promise((resolve, reject) => {
         Vue.http.get(apiUrl + '/price', {
             params: {
-                crypto: crypto
+                crypto: crypto,
+                currency: currency
             }
         }).then((result) => {
-            resolve(getJsonBody(result.body.USD));
+            resolve(getJsonBody(result.body[currency]));
         }).catch((err) => {
             reject(err);
         });
     });
 }
 
-export function getValue(crypto, coins) {
+export function getValue(crypto, coins, currency) {
     return new Promise((resolve, reject) => {
         Vue.http.get(apiUrl + '/value', {
             params: {
                 crypto: crypto,
-                coins: coins
+                coins: coins,
+                currency: currency
             }
         }).then((result) => {
             resolve(JSON.parse(result.body));
@@ -43,11 +45,12 @@ export function getValue(crypto, coins) {
     });
 }
 
-export function getDaily(crypto) {
+export function getDaily(crypto, currency) {
     return new Promise((resolve, reject) => {
         Vue.http.get(apiUrl + '/daily', {
             params: {
-                crypto: crypto
+                crypto: crypto,
+                currency: currency
             }
         }).then((result) => {
             resolve(JSON.parse(result.body));
@@ -57,11 +60,12 @@ export function getDaily(crypto) {
     });
 }
 
-export function getMonthly(crypto) {
+export function getMonthly(crypto, currency) {
     return new Promise((resolve, reject) => {
         Vue.http.get(apiUrl + '/value', {
             params: {
-                crypto: crypto
+                crypto: crypto,
+                currency: currency
             }
         }).then((result) => {
             resolve(JSON.parse(result.body));
@@ -82,15 +86,16 @@ export function getPortfolio() {
     });
 }
 
-export function getPriceForTimestamp(crypto, day) {
+export function getPriceForTimestamp(crypto, day, currency) {
     return new Promise((resolve, reject) => {
       Vue.http.get(apiUrl + '/historicprice', {
           params: {
               crypto: crypto,
-              day: day
+              day: day,
+              currency: currency
           }
         }).then((result) => {
-            resolve(JSON.parse(result.body.USD));
+            resolve(JSON.parse(result.body[currency]));
         }).catch((err) => {
             reject(err);
         });

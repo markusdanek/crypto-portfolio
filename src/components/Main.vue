@@ -5,6 +5,7 @@
 
     <input autofocus autocomplete="off" placeholder="Crypto name" v-model="newcrypto">
     <input autocomplete="off" placeholder="Amount" v-model="cryptoAmount" @keyup.enter="addCrypto">
+    <input autocomplete="off" placeholder="Currency" v-model="cryptoCurrency" @keyup.enter="addCrypto">
     <datepicker v-model="cryptoDate" name="cryptoDate" placeholder="Date of purchase"></datepicker>
 
     <button type="button" name="button" @click="addCrypto">Add</button>
@@ -51,6 +52,7 @@
         newcrypto: '',
         cryptoAmount: '',
         cryptoDate: '',
+        cryptoCurrency: '',
         cryptoGrouped: ''
       }
     },
@@ -75,6 +77,7 @@
         let title = this.newcrypto && this.newcrypto.trim();
         let amount = this.cryptoAmount && this.cryptoAmount.trim();
         let date = this.cryptoDate;
+        let currency = this.cryptoCurrency;
         if (!title) {
           return
         }
@@ -82,20 +85,20 @@
           id: cryptostorage.uid++,
           title: title,
           amount: amount,
+          currency: currency,
           purchaseDate: date
         });
         this.newcrypto = '';
         this.cryptoAmount = '';
         this.cryptoDate = '';
+        this.cryptoCurrency = '';
       },
       removeCrypto(crypto) {
         this.cryptos.splice(this.cryptos.indexOf(crypto), 1)
       },
       getHistoricPrice() {
         for (let i = 0; i < this.cryptos.length; i++) {
-          let cryptoName = this.cryptos[i].title;
-          let cryptoDate = this.cryptos[i].purchaseDate;
-          let historicPrice = getPriceForTimestamp(cryptoName, cryptoDate);
+          let historicPrice = getPriceForTimestamp(this.cryptos[i].title, this.cryptos[i].purchaseDate, this.cryptos[i].currency);
           Promise.all([historicPrice]).then((values) => {
             Vue.set(this.cryptos[i], 'purchaseDatePrice', values[0]);
           }).catch(e => console.error(e));
@@ -112,13 +115,13 @@
             value = parseInt(cryptoAmount * cryptoPrice);
             cryptoValue+=value;
           }
-          Vue.set(this.cryptos[i], 'purchaseValueInUSD', value);
+          Vue.set(this.cryptos[i], 'purchaseValueFiat', value);
         }
       },
       getPriceForToday(){
         let priceToday = [];
         for (let i = 0; i < this.cryptos.length; i++) {
-          let priceTodayPromise = getPrice(this.cryptos[i].title)
+          let priceTodayPromise = getPrice(this.cryptos[i].title, this.cryptos[i].currency)
             .then((values)=>{
               priceToday.push(values);
               Vue.set(this.cryptos[i], 'priceToday', values);
@@ -135,7 +138,7 @@
           yesterday.setDate(yesterday.getDate() - 1);
           yesterday = yesterday.toISOString();
 
-          let priceYesterdayPromise = getPriceForTimestamp(this.cryptos[i].title, yesterday)
+          let priceYesterdayPromise = getPriceForTimestamp(this.cryptos[i].title, yesterday, this.cryptos[i].currency)
             .then((values) => {
               priceYesterday.push(values);
               Vue.set(this.cryptos[i], 'priceYesterday', values);

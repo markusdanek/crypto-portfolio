@@ -45,7 +45,7 @@
       valuePortfolioPurchase(){
         this.portfolioValuePurchase = 0;
         for (let i = 0; i < this.cryptos.length; i++) {
-          this.portfolioValuePurchase+=this.cryptos[i].purchaseValueInUSD;
+          this.portfolioValuePurchase+=this.cryptos[i].purchaseValueFiat;
         }
       },
       valuePortfolioToday(){
@@ -54,8 +54,8 @@
           let amountTodayDollar = this.cryptos[i].priceToday * this.cryptos[i].amount;
           this.portfolioValueToday+=amountTodayDollar;
         }
-        let valueUSD = this.portfolioValuePurchase - this.portfolioValueToday;
-        this.portfolioValueTodayPercent = (valueUSD / this.portfolioValueToday) * 100;
+        let valueFiat = this.portfolioValuePurchase - this.portfolioValueToday;
+        this.portfolioValueTodayPercent = (valueFiat / this.portfolioValueToday) * 100;
       },
       valuePortfolioYesterday(){
         this.portfolioValueYesterday = 0;
@@ -63,8 +63,8 @@
           let amountYesterdayDollar = this.cryptos[i].priceYesterday * this.cryptos[i].amount;
           this.portfolioValueYesterday+=amountYesterdayDollar;
         }
-        let valueUSD = this.portfolioValueToday - this.portfolioValueYesterday;
-        this.portfolioValueYesterdayPercent = (valueUSD / this.portfolioValueYesterday) * 100;
+        let valueFiat = this.portfolioValueToday - this.portfolioValueYesterday;
+        this.portfolioValueYesterdayPercent = (valueFiat / this.portfolioValueYesterday) * 100;
       }
     },
     mounted() {
