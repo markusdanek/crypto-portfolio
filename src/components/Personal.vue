@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button type="button" name="button" @click="addCryptoToStorage">Set Coins to Storage</button>
+    <button type="button" name="button" @click="addCryptoToStorage">Set personal coins to storage</button>
   </div>
 </template>
 

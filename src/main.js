@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
 import router from './router'
@@ -7,6 +5,13 @@ import VueResource from 'vue-resource'
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash'
 import firebase from 'firebase'
+import WebFont from 'webfontloader'
+
+WebFont.load({
+  google: {
+    families: ['Droid Sans', 'Droid Serif']
+  }
+});
 
 Vue.use(VueResource, VueLodash, lodash);
 

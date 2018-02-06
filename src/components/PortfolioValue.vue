@@ -1,23 +1,32 @@
 <template>
   <div>
-    <section>
-      Purchase portfolio value: {{ portfolioValuePurchase }}
-      <br>
-      Portfolio value today: {{ portfolioValueToday }}
-        <span v-if="portfolioValueTodayPercent > 0">
-          (-{{ portfolioValueTodayPercent }})
-        </span>
-        <span v-else>
-          (+{{ portfolioValueTodayPercent }})
-        </span>
-      <br>
-      Portfolio value yesterday: {{ portfolioValueYesterday }}
-        <span v-if="portfolioValueYesterdayPercent > 0">
-          (-{{ portfolioValueYesterdayPercent }})
-        </span>
-        <span v-else>
-          (+{{ portfolioValueYesterdayPercent }})
-        </span>
+    <section class="portfolio-value">
+      <div v-if="portfolioValueToday > 0">
+        <div class="portfolio-value--today">
+          <p>
+            Today: {{ portfolioValueToday }}
+            <span>{{ portfolioValueTodayPercent }}% </span>
+          </p>
+        </div>
+        <div class="portfolio-stats">
+          <div class="portfolio-stats--purchase">
+            <p>
+              Purchase value: {{ portfolioValuePurchase }}
+              <!-- <span>Purchase value</span> -->
+            </p>
+          </div>
+          <div class="portfolio-stats--yesterday">
+            <p>
+              Yesterday: {{ portfolioValueYesterday }}
+              <!-- <span>{{ portfolioValueYesterdayPercent }}% yesterday</span> -->
+              <span>{{ portfolioValueYesterdayPercent }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <h1>Please add a cryptocurrency!</h1>
+      </div>
     </section>
   </div>
 </template>
@@ -56,6 +65,9 @@
         }
         let valueFiat = this.portfolioValuePurchase - this.portfolioValueToday;
         this.portfolioValueTodayPercent = (valueFiat / this.portfolioValueToday) * 100;
+        this.portfolioValueTodayPercent = this.portfolioValueTodayPercent.toFixed(2);
+        this.portfolioValueTodayPercent = this.portfolioValueTodayPercent * -1;
+
       },
       valuePortfolioYesterday(){
         this.portfolioValueYesterday = 0;
@@ -65,6 +77,8 @@
         }
         let valueFiat = this.portfolioValueToday - this.portfolioValueYesterday;
         this.portfolioValueYesterdayPercent = (valueFiat / this.portfolioValueYesterday) * 100;
+        this.portfolioValueYesterdayPercent = this.portfolioValueYesterdayPercent.toFixed(2);
+        this.portfolioValueYesterdayPercent = this.portfolioValueYesterdayPercent * -1;
       }
     },
     mounted() {
@@ -75,6 +89,65 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss">
+  .portfolio-value {
+    font-family: Droid Sans;
+    text-align: center;
+    h1 {
+      font-size: 40px;
+      text-align: center;
+    }
+    h1, p, span {
+      color: #FFF;
+    }
 
+    &--today {
+      display: inline-block;
+      p {
+        margin: 0;
+        font-size: 50px;
+        span {
+          position: relative;
+          top: -10px;
+          background: #4B57A8;
+          padding: 5px;
+          font-size: 20px;
+        }
+      }
+    }
+
+    .portfolio-stats {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      grid-gap: 0px;
+      &--purchase {
+        text-align: right;
+        margin-right: 20px;
+        p {
+          font-size: 20px;
+          span {
+            position: relative;
+            top: -3px;
+            background: #4B57A8;
+            padding: 5px;
+            font-size: 15px;
+          }
+        }
+      }
+      &--yesterday {
+        text-align: left;
+        margin-left: 20px;
+        p {
+          font-size: 20px;
+          span {
+            position: relative;
+            top: -3px;
+            background: #4B57A8;
+            padding: 5px;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
 </style>

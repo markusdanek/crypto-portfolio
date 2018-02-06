@@ -1,27 +1,30 @@
 <template>
   <div>
+    <header>
+      <!-- <img src="static/logo.png" alt=""> -->
+      <!-- <h1>Cryptocoin Portfolio</h1> -->
+      <portfolioValue></portfolioValue>
+    </header>
 
-    <pre>{{ $data }}</pre>
+    <section>
+      <input autofocus autocomplete="off" placeholder="Crypto name" v-model="newcrypto">
+      <input autocomplete="off" placeholder="Amount" v-model="cryptoAmount" @keyup.enter="addCrypto">
+      <input autocomplete="off" placeholder="Currency" v-model="cryptoCurrency" @keyup.enter="addCrypto">
+      <datepicker v-model="cryptoDate" name="cryptoDate" placeholder="Date of purchase"></datepicker>
 
-    <input autofocus autocomplete="off" placeholder="Crypto name" v-model="newcrypto">
-    <input autocomplete="off" placeholder="Amount" v-model="cryptoAmount" @keyup.enter="addCrypto">
-    <input autocomplete="off" placeholder="Currency" v-model="cryptoCurrency" @keyup.enter="addCrypto">
-    <datepicker v-model="cryptoDate" name="cryptoDate" placeholder="Date of purchase"></datepicker>
+      <button type="button" name="button" @click="addCrypto">Add</button>
 
-    <button type="button" name="button" @click="addCrypto">Add</button>
-
-    <section v-show="cryptos.length" v-cloak>
-      <ul class="todo-list">
-        <li v-for="crypto in cryptos" :key="crypto.id">
-          <div>
-            <label>{{ crypto.title }} (Amount: {{ crypto.amount }})</label>
-            <button class="destroy" @click="removeCrypto(crypto)">Delete</button>
-          </div>
-        </li>
-      </ul>
+      <section v-show="cryptos.length" v-cloak>
+        <ul class="todo-list">
+          <li v-for="crypto in cryptos" :key="crypto.id">
+            <div>
+              <label>{{ crypto.title }} (Amount: {{ crypto.amount }})</label>
+              <button class="destroy" @click="removeCrypto(crypto)">Delete</button>
+            </div>
+          </li>
+        </ul>
+      </section>
     </section>
-
-    <portfolioValue></portfolioValue>
 
   </div>
 </template>
@@ -161,6 +164,20 @@
   }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  header {
+    // min-height: 200px;
+    padding: 25px 0;
+    background-color: #4965C3;
+    img {
+      display: none;
+      width: 100px;
+      text-align: center;
+    }
+    h1 {
+      text-align: center;
+      font-family: Droid Sans;
+      color: white;
+    }
+  }
 </style>

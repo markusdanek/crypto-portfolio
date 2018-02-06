@@ -1,10 +1,9 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Main from '../components/Main'
-import PortfolioValue from '../components/PortfolioValue'
-import Difference from '../components/Difference'
-import Test from '../components/Test'
-import CoinValue from '../components/CoinValue'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Main from '../components/Main';
+import PortfolioValue from '../components/PortfolioValue';
+import Personal from '../components/Personal';
+import CoinValue from '../components/CoinValue';
 
 Vue.use(Router)
 
@@ -21,14 +20,9 @@ export default new Router({
       component: PortfolioValue
     },
     {
-      path: '/diff',
-      name: 'Difference',
-      component: Difference
-    },
-    {
-      path: '/test',
-      name: 'Test',
-      component: Test
+      path: '/personal',
+      name: 'Personal',
+      component: Personal
     },
     {
       path: '/coinvalue',
