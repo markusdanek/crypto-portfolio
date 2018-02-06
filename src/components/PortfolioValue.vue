@@ -62,7 +62,9 @@
         for (let i = 0; i < this.cryptos.length; i++) {
           let amountTodayDollar = this.cryptos[i].priceToday * this.cryptos[i].amount;
           this.portfolioValueToday+=amountTodayDollar;
+          // this.portfolioValueToday = this.portfolioValueToday.toFixed(2);
         }
+        this.portfolioValueToday = this.portfolioValueToday.toFixed(2);
         let valueFiat = this.portfolioValuePurchase - this.portfolioValueToday;
         this.portfolioValueTodayPercent = (valueFiat / this.portfolioValueToday) * 100;
         this.portfolioValueTodayPercent = this.portfolioValueTodayPercent.toFixed(2);
@@ -75,6 +77,7 @@
           let amountYesterdayDollar = this.cryptos[i].priceYesterday * this.cryptos[i].amount;
           this.portfolioValueYesterday+=amountYesterdayDollar;
         }
+        this.portfolioValueYesterday = this.portfolioValueYesterday.toFixed(2);
         let valueFiat = this.portfolioValueToday - this.portfolioValueYesterday;
         this.portfolioValueYesterdayPercent = (valueFiat / this.portfolioValueYesterday) * 100;
         this.portfolioValueYesterdayPercent = this.portfolioValueYesterdayPercent.toFixed(2);

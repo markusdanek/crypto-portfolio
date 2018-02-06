@@ -6,24 +6,24 @@
       <portfolioValue></portfolioValue>
     </header>
 
-    <section>
-      <input autofocus autocomplete="off" placeholder="Crypto name" v-model="newcrypto">
-      <input autocomplete="off" placeholder="Amount" v-model="cryptoAmount" @keyup.enter="addCrypto">
-      <input autocomplete="off" placeholder="Currency" v-model="cryptoCurrency" @keyup.enter="addCrypto">
-      <datepicker v-model="cryptoDate" name="cryptoDate" placeholder="Date of purchase"></datepicker>
-
+    <section class="add-cryptos">
+      <input autofocus autocomplete="off" placeholder="Name (BTC)" v-model="newcrypto">
+      <input autocomplete="off" placeholder="Amount (0.001)" v-model="cryptoAmount" @keyup.enter="addCrypto">
+      <input autocomplete="off" placeholder="Currency (USD)" v-model="cryptoCurrency" @keyup.enter="addCrypto">
+      <datepicker input-class="cc-input" v-model="cryptoDate" name="cryptoDate" placeholder="Date of purchase"></datepicker>
       <button type="button" name="button" @click="addCrypto">Add</button>
+    </section>
 
-      <section v-show="cryptos.length" v-cloak>
-        <ul class="todo-list">
-          <li v-for="crypto in cryptos" :key="crypto.id">
-            <div>
-              <label>{{ crypto.title }} (Amount: {{ crypto.amount }})</label>
-              <button class="destroy" @click="removeCrypto(crypto)">Delete</button>
-            </div>
-          </li>
-        </ul>
-      </section>
+    <section class="computed-crypto" v-show="cryptos.length" v-cloak>
+      <h1>Your cryptocurrencies</h1>
+      <ul class="todo-list">
+        <li v-for="crypto in cryptos" :key="crypto.id">
+          <div>
+            <label>{{ crypto.title }} (Amount: {{ crypto.amount }})</label>
+            <button class="destroy" @click="removeCrypto(crypto)">Delete</button>
+          </div>
+        </li>
+      </ul>
     </section>
 
   </div>
@@ -166,7 +166,6 @@
 
 <style lang="scss" scoped>
   header {
-    // min-height: 200px;
     padding: 25px 0;
     background-color: #4965C3;
     img {
@@ -178,6 +177,47 @@
       text-align: center;
       font-family: Droid Sans;
       color: white;
+    }
+  }
+
+  .add-cryptos {
+    text-align: center;
+    padding-top: 50px;
+    .vdp-datepicker {
+      display: inline-block;
+    }
+    input{
+      font-size: 1rem;
+      font-weight: 400;
+      color: #4965C3;
+      padding-top: 0;
+      padding-right: 10px;
+      padding-bottom: 0;
+      padding-left: 10px;
+      box-sizing: border-box;
+      width: 150px;
+      min-height: 40px;
+      border: 2px solid #ccc;
+      outline: 0;
+    }
+    button {
+      background: #4965C3;
+      color: #FFF;
+      border: none;
+      outline: 0;
+      height: 40px;
+      padding: 10px;
+      position: relative;
+      top: -2px;
+    }
+  }
+
+  .computed-crypto {
+    text-align: center;
+    ul {
+      li {
+        list-style-type: none;
+      }
     }
   }
 </style>

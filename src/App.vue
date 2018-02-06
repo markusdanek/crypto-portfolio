@@ -23,4 +23,18 @@ export default {
     line-height: 1.42857143;
     color: #000;
   }
+  input.cc-input {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #005db4;
+    padding-top: 0;
+    padding-right: 10px;
+    padding-bottom: 0;
+    padding-left: 10px;
+    box-sizing: border-box;
+    width: 200px;
+    min-height: 40px;
+    border: 2px solid #ccc;
+    outline: 0;
+  }
 </style>
