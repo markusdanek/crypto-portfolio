@@ -1,9 +1,9 @@
 <template>
   <div>
     <header>
-      <!-- <img src="static/logo.png" alt=""> -->
-      <!-- <h1>Cryptocoin Portfolio</h1> -->
-      <portfolioValue></portfolioValue>
+      <div class="skew">
+        <portfolioValue></portfolioValue>
+      </div>
     </header>
 
     <section class="add-cryptos">
@@ -167,17 +167,13 @@
 <style lang="scss" scoped>
   header {
     padding: 25px 0;
-    background-color: #4965C3;
-    img {
-      display: none;
-      width: 100px;
-      text-align: center;
-    }
-    h1 {
-      text-align: center;
-      font-family: Droid Sans;
-      color: white;
-    }
+    background: url("/static/main_bg.jpg") no-repeat;
+    background-size: cover;
+    // background-color: #4965C3;
+    // transform: skew(0deg, -10deg);
+    // padding: 200px 0;
+    // margin-top: -200px;
+    // background-position: center center;
   }
 
   .add-cryptos {
