@@ -1,9 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Main from '../components/Main';
-import PortfolioValue from '../components/PortfolioValue';
-import Personal from '../components/Personal';
-import CoinValue from '../components/CoinValue';
 
 Vue.use(Router)
 
@@ -12,22 +8,21 @@ export default new Router({
     {
       path: '/',
       name: 'Main',
-      component: Main
+      component: require('../components/Main').default
     },
     {
       path: '/portfolio',
       name: 'Portfolio',
-      component: PortfolioValue
+      component: require('../components/PortfolioValue').default
     },
     {
       path: '/personal',
-      name: 'Personal',
-      component: Personal
+      component: require('../components/Personal').default
     },
     {
       path: '/coinvalue',
       name: 'CoinValue',
-      component: CoinValue
+      component: require('../components/CoinValue').default
     }
   ]
 })

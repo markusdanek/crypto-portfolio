@@ -1,18 +1,8 @@
 <template>
   <div>
-    <header>
-      <div class="skew">
-        <portfolioValue></portfolioValue>
-      </div>
-    </header>
+    <AppHeader></AppHeader>
 
-    <section class="add-cryptos">
-      <input autofocus autocomplete="off" placeholder="Name (BTC)" v-model="newcrypto">
-      <input autocomplete="off" placeholder="Amount (0.001)" v-model="cryptoAmount" @keyup.enter="addCrypto">
-      <input autocomplete="off" placeholder="Currency (USD)" v-model="cryptoCurrency" @keyup.enter="addCrypto">
-      <datepicker input-class="cc-input" v-model="cryptoDate" name="cryptoDate" placeholder="Date of purchase"></datepicker>
-      <button type="button" name="button" @click="addCrypto">Add</button>
-    </section>
+    <AddCryptos></AddCryptos>
 
     <section class="computed-crypto" v-show="cryptos.length" v-cloak>
       <h1>Your cryptocurrencies</h1>
@@ -31,74 +21,22 @@
 
 <script>
 
-  Array.prototype.groupBy = function(prop) {
-    return this.reduce(function(groups, item) {
-      var val = item[prop];
-      groups[val] = groups[val] || [];
-      groups[val].push(item);
-      return groups;
-    }, {});
-  }
-
   import Vue from 'vue';
-  import Datepicker from 'vuejs-datepicker';
+  import AppHeader from '@/components/layouts/Header';
+  import AddCryptos from '@/components/AddCrypto';
   import { getPrice, getPriceForTimestamp } from '../api/crypto';
   import { cryptostorage } from '../api/utils';
-  import PortfolioValue from '@/components/PortfolioValue'
 
   export default {
     name: 'Main',
-
+    props: [],
     data () {
       return {
         cryptos: cryptostorage.fetch(),
-        newcrypto: '',
-        cryptoAmount: '',
-        cryptoDate: '',
-        cryptoCurrency: '',
         cryptoGrouped: ''
       }
     },
-    watch: {
-      cryptos: {
-        handler(cryptos) {
-          cryptostorage.save(cryptos)
-        },
-        deep: true
-      }
-    },
     methods: {
-      groupBy(prop) {
-        return this.reduce(function(groups, item) {
-          var val = item[prop];
-          groups[val] = groups[val] || [];
-          groups[val].push(item);
-          return groups;
-        }, {});
-      },
-      addCrypto() {
-        let title = this.newcrypto && this.newcrypto.trim();
-        let amount = this.cryptoAmount && this.cryptoAmount.trim();
-        let date = this.cryptoDate;
-        let currency = this.cryptoCurrency;
-        if (!title) {
-          return
-        }
-        this.cryptos.push({
-          id: cryptostorage.uid++,
-          title: title,
-          amount: amount,
-          currency: currency,
-          purchaseDate: date
-        });
-        this.newcrypto = '';
-        this.cryptoAmount = '';
-        this.cryptoDate = '';
-        this.cryptoCurrency = '';
-      },
-      removeCrypto(crypto) {
-        this.cryptos.splice(this.cryptos.indexOf(crypto), 1)
-      },
       getHistoricPrice() {
         for (let i = 0; i < this.cryptos.length; i++) {
           let historicPrice = getPriceForTimestamp(this.cryptos[i].title, this.cryptos[i].purchaseDate, this.cryptos[i].currency);
@@ -152,8 +90,7 @@
       }
     },
     components: {
-      Datepicker,
-      PortfolioValue
+      AppHeader, AddCryptos
     },
     mounted() {
       this.getHistoricPrice();
@@ -165,49 +102,6 @@
 </script>
 
 <style lang="scss" scoped>
-  header {
-    padding: 25px 0;
-    background: url("/static/main_bg.jpg") no-repeat;
-    background-size: cover;
-    // background-color: #4965C3;
-    // transform: skew(0deg, -10deg);
-    // padding: 200px 0;
-    // margin-top: -200px;
-    // background-position: center center;
-  }
-
-  .add-cryptos {
-    text-align: center;
-    padding-top: 50px;
-    .vdp-datepicker {
-      display: inline-block;
-    }
-    input{
-      font-size: 1rem;
-      font-weight: 400;
-      color: #4965C3;
-      padding-top: 0;
-      padding-right: 10px;
-      padding-bottom: 0;
-      padding-left: 10px;
-      box-sizing: border-box;
-      width: 150px;
-      min-height: 40px;
-      border: 2px solid #ccc;
-      outline: 0;
-    }
-    button {
-      background: #4965C3;
-      color: #FFF;
-      border: none;
-      outline: 0;
-      height: 40px;
-      padding: 10px;
-      position: relative;
-      top: -2px;
-    }
-  }
-
   .computed-crypto {
     text-align: center;
     ul {
