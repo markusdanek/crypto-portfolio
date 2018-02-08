@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import { cryptostorage } from '../api/utils';
+  import { cryptostorage } from '../helpers/utils';
 
   export default {
     name: 'PortfolioValue',

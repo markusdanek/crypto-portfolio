@@ -5,8 +5,8 @@
 </template>
 
 <script>
-  import { cryptostorage } from '../api/utils';
-  import { personalCoins } from '../api/coins';
+  import { cryptostorage } from '../helpers/utils';
+  import { personalCoins } from '../helpers/coins';
 
   export default {
     name: 'Test',

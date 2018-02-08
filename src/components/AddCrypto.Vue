@@ -10,16 +10,7 @@
 
 <script>
 
-  Array.prototype.groupBy = function(prop) {
-    return this.reduce(function(groups, item) {
-      var val = item[prop];
-      groups[val] = groups[val] || [];
-      groups[val].push(item);
-      return groups;
-    }, {});
-  }
-
-  import { cryptostorage } from '../api/utils';
+  import { cryptostorage } from '../helpers/utils';
   import Datepicker from 'vuejs-datepicker';
 
   export default {
@@ -42,14 +33,6 @@
       }
     },
     methods: {
-      groupBy(prop) {
-        return this.reduce(function(groups, item) {
-          var val = item[prop];
-          groups[val] = groups[val] || [];
-          groups[val].push(item);
-          return groups;
-        }, {});
-      },
       addCrypto() {
         let title = this.newcrypto && this.newcrypto.trim();
         let amount = this.cryptoAmount && this.cryptoAmount.trim();
@@ -69,9 +52,6 @@
         this.cryptoAmount = '';
         this.cryptoDate = '';
         this.cryptoCurrency = '';
-      },
-      removeCrypto(crypto) {
-        this.cryptos.splice(this.cryptos.indexOf(crypto), 1)
       }
     },
     components: {

@@ -1,39 +1,42 @@
 <template>
   <div>
     <AppHeader></AppHeader>
-
     <AddCryptos></AddCryptos>
-
-    <section class="computed-crypto" v-show="cryptos.length" v-cloak>
-      <h1>Your cryptocurrencies</h1>
-      <ul class="todo-list">
-        <li v-for="crypto in cryptos" :key="crypto.id">
-          <div>
-            <label>{{ crypto.title }} (Amount: {{ crypto.amount }})</label>
-            <button class="destroy" @click="removeCrypto(crypto)">Delete</button>
-          </div>
-        </li>
-      </ul>
-    </section>
-
+    <CryptoList></CryptoList>
   </div>
 </template>
 
 <script>
+  Array.prototype.groupBy = function(prop) {
+    return this.reduce(function(groups, item) {
+      var val = item[prop];
+      groups[val] = groups[val] || [];
+      groups[val].push(item);
+      return groups;
+    }, {});
+  }
 
   import Vue from 'vue';
   import AppHeader from '@/components/layouts/Header';
   import AddCryptos from '@/components/AddCrypto';
+  import CryptoList from '@/components/CryptoList';
+  import { cryptostorage } from '../helpers/utils';
   import { getPrice, getPriceForTimestamp } from '../api/crypto';
-  import { cryptostorage } from '../api/utils';
 
   export default {
     name: 'Main',
-    props: [],
     data () {
       return {
         cryptos: cryptostorage.fetch(),
         cryptoGrouped: ''
+      }
+    },
+    watch: {
+      cryptos: {
+        handler(cryptos) {
+          cryptostorage.save(cryptos)
+        },
+        deep: true
       }
     },
     methods: {
@@ -78,7 +81,6 @@
           let yesterday = new Date();
           yesterday.setDate(yesterday.getDate() - 1);
           yesterday = yesterday.toISOString();
-
           let priceYesterdayPromise = getPriceForTimestamp(this.cryptos[i].title, yesterday, this.cryptos[i].currency)
             .then((values) => {
               priceYesterday.push(values);
@@ -90,7 +92,7 @@
       }
     },
     components: {
-      AppHeader, AddCryptos
+      AppHeader, AddCryptos, CryptoList
     },
     mounted() {
       this.getHistoricPrice();

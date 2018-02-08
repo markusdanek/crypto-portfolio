@@ -26,7 +26,7 @@ export let cryptostorage = {
   }
 }
 
-// export function Array.prototype.groupBy(prop) {
+// Array.prototype.groupBy = function(prop) {
 //   return this.reduce(function(groups, item) {
 //     var val = item[prop];
 //     groups[val] = groups[val] || [];
