@@ -1,17 +1,24 @@
 <template>
-  <section class="add-cryptos">
-    <input autofocus autocomplete="off" placeholder="Name (BTC)" v-model="newcrypto">
-    <input autocomplete="off" placeholder="Amount (0.001)" v-model="cryptoAmount" @keyup.enter="addCrypto">
-    <input autocomplete="off" placeholder="Currency (USD)" v-model="cryptoCurrency" @keyup.enter="addCrypto">
-    <datepicker input-class="cc-input" v-model="cryptoDate" name="cryptoDate" placeholder="Date of purchase"></datepicker>
-    <button type="button" name="button" @click="addCrypto">Add</button>
-  </section>
+  <b-container class="add-cryptos">
+    <b-row>
+      <b-col sm="12" md="12" lg="12">
+        <input autofocus autocomplete="off" placeholder="Name (BTC)" v-model="newcrypto">
+        <input autocomplete="off" placeholder="Amount (0.001)" v-model="cryptoAmount" @keyup.enter="addCrypto">
+        <input autocomplete="off" placeholder="Currency (USD)" v-model="cryptoCurrency" @keyup.enter="addCrypto">
+        <datepicker input-class="cc-input" v-model="cryptoDate" name="cryptoDate" placeholder="Date of purchase"></datepicker>
+        <button type="button" name="button" @click="addCrypto">Add</button>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
 
   import { cryptostorage } from '../helpers/utils';
   import Datepicker from 'vuejs-datepicker';
+  import bContainer from 'bootstrap-vue/es/components/layout/container';
+  import bRow from 'bootstrap-vue/es/components/layout/row';
+  import bCol from 'bootstrap-vue/es/components/layout/col';
 
   export default {
     name: 'AddCryptos',
@@ -55,8 +62,11 @@
       }
     },
     components: {
-      Datepicker
-    },
+      Datepicker,
+      'b-container': bContainer,
+      'b-row': bRow,
+      'b-col': bCol
+    }
   }
 </script>
 
@@ -88,8 +98,6 @@
       outline: 0;
       height: 40px;
       padding: 10px;
-      position: relative;
-      top: -2px;
     }
   }
 </style>
