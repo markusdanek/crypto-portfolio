@@ -6,7 +6,12 @@ import VueLodash from 'vue-lodash';
 import lodash from 'lodash';
 import firebase from 'firebase';
 import WebFont from 'webfontloader';
+import BootstrapVue from 'bootstrap-vue/es/';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+import 'babel-polyfill';
 
+Vue.use(BootstrapVue);
 Vue.use(VueResource, VueLodash, lodash);
 
 Vue.config.productionTip = false;

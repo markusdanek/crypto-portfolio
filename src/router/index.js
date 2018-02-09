@@ -23,6 +23,11 @@ export default new Router({
       path: '/coinvalue',
       name: 'CoinValue',
       component: require('../components/CoinValue').default
+    },
+    {
+      path: '/qr',
+      name: 'QRcode',
+      component: require('../components/QRcode').default
     }
   ]
 })
