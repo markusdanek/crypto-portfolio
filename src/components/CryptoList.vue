@@ -7,14 +7,11 @@
     </b-row>
     <b-row>
       <b-col sm="12" md="12" lg="12" offset="1">
-        <ul class="todo-list">
-          <li v-for="crypto in cryptos" :key="crypto.id">
-            <div>
-              <label>{{ crypto.title }} (Amount: {{ crypto.amount }})</label>
-              <button class="destroy" @click="removeCrypto(crypto)">Delete</button>
-            </div>
-          </li>
-        </ul>
+        <b-row v-for="crypto in cryptos" :key="crypto.id" class="crypto-item">
+          <b-col sm="3" md="3" lg="1">{{ crypto.title }}</b-col>
+          <b-col sm="3" md="3" lg="1">{{ crypto.amount }}</b-col>
+          <b-col sm="3" md="3" lg="1"><button class="destroy" @click="removeCrypto(crypto)">Delete</button></b-col>
+        </b-row>
       </b-col>
     </b-row>
   </b-container>
@@ -25,9 +22,13 @@
   import Vue from 'vue';
   import { getPrice, getPriceForTimestamp } from '../api/crypto';
   import { cryptostorage } from '../helpers/utils';
+
   import bContainer from 'bootstrap-vue/es/components/layout/container';
   import bRow from 'bootstrap-vue/es/components/layout/row';
   import bCol from 'bootstrap-vue/es/components/layout/col';
+  import bCollapse from 'bootstrap-vue/es/components/collapse/collapse';
+  // import bButton from 'bootstrap-vue/es/components/button/button';
+  // import bToggle from 'bootstrap-vue/es/directives/toggle/toggle';
 
   export default {
     name: 'CryptoList',
@@ -53,7 +54,12 @@
       'b-container': bContainer,
       'b-row': bRow,
       'b-col': bCol
+      // 'b-btn': bButton,
+      // 'b-collapse': bCollapse
     }
+    // directives: {
+    //   'b-toggle': bToggle
+    // }
   }
 </script>
 
@@ -63,12 +69,9 @@
     h5 {
       text-align: left;
     }
-    ul {
+    .crypto-item {
+      padding: 0 0 0 50px;
       text-align: left;
-      padding: 0;
-      li {
-        list-style-type: none;
-      }
     }
   }
 </style>

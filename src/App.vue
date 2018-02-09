@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
   html {
     overflow-x: hidden;
     overflow-y: auto;
@@ -21,6 +21,7 @@ export default {
     font-family: "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
     font-size: 14px;
     line-height: 1.42857143;
+    background: #f9f9f9;
     color: #000000;
   }
   input.cc-input {
@@ -33,5 +34,8 @@ export default {
     min-height: 40px;
     border: 2px solid #CCCCCC;
     outline: 0;
+  }
+  .container {
+    background: #FFFFFF;
   }
 </style>

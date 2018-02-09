@@ -4,8 +4,8 @@
       <div v-if="portfolioValueToday > 0">
         <div class="portfolio-value--today">
           <p>
-            Today: {{ portfolioValueToday }}
-            <span>{{ portfolioValueTodayPercent }}% </span>
+            € {{ portfolioValueToday }}
+            <span class="percentage" v-bind:class="{ positive: isPositivToday }">{{ portfolioValueTodayPercent }}% </span>
           </p>
         </div>
         <div class="portfolio-stats">
@@ -44,9 +44,11 @@
 
         portfolioValueToday: '',
         portfolioValueTodayPercent: '',
+        isPositivToday: true,
 
         portfolioValueYesterday: '',
-        portfolioValueYesterdayPercent: ''
+        portfolioValueYesterdayPercent: '',
+        isPositivYesterday: false,
       }
     },
     props: ['portfolio'],
@@ -62,14 +64,17 @@
         for (let i = 0; i < this.cryptos.length; i++) {
           let amountTodayDollar = this.cryptos[i].priceToday * this.cryptos[i].amount;
           this.portfolioValueToday+=amountTodayDollar;
-          // this.portfolioValueToday = this.portfolioValueToday.toFixed(2);
         }
         this.portfolioValueToday = this.portfolioValueToday.toFixed(2);
         let valueFiat = this.portfolioValuePurchase - this.portfolioValueToday;
         this.portfolioValueTodayPercent = (valueFiat / this.portfolioValueToday) * 100;
         this.portfolioValueTodayPercent = this.portfolioValueTodayPercent.toFixed(2);
         this.portfolioValueTodayPercent = this.portfolioValueTodayPercent * -1;
-
+        if(this.portfolioValueTodayPercent > 0) {
+          this.isPositivToday = true;
+        } else {
+          this.isPositivToday = false;
+        }
       },
       valuePortfolioYesterday(){
         this.portfolioValueYesterday = 0;
@@ -115,6 +120,10 @@
           background: #4B57A8;
           padding: 5px;
           font-size: 20px;
+          color: #FF140C;
+          &.positiv {
+            color: #7BEB6E;
+          }
         }
       }
     }

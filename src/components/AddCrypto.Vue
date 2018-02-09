@@ -1,5 +1,6 @@
 <template>
   <b-container class="add-cryptos">
+    <h4>Add your cryptocoins</h4>
     <b-row>
       <b-col sm="12" md="12" lg="12">
         <input autofocus autocomplete="off" placeholder="Name (BTC)" v-model="newcrypto">
@@ -73,7 +74,10 @@
 <style lang="scss" scoped>
   .add-cryptos {
     text-align: center;
-    padding-top: 50px;
+    padding-top: 25px;
+    h4 {
+      margin-bottom: 20px;
+    }
     .vdp-datepicker {
       display: inline-block;
     }

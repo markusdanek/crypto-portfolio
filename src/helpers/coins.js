@@ -76,4 +76,10 @@ export let personalCoins = [{
   "amount": "9.7466676",
   "currency": "EUR",
   "purchaseDate": "2018-01-16T13:22:00.000Z"
+},{
+  "id": 13,
+  "title": "ETH",
+  "amount": "0.87617595",
+  "currency": "EUR",
+  "purchaseDate": "2018-02-09T19:45:00.000Z"
 }];
