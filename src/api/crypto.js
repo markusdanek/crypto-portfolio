@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import { getJsonBody } from '../helpers/utils';
 
-const apiUrl = 'http://cryptocoin-api.herokuapp.com'
+const apiUrl = 'https://cryptocoin-api.herokuapp.com'
 const devUrl = 'http://localhost:9001'
 
 export function getByUrl(url) {
