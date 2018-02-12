@@ -1,5 +1,5 @@
 <template>
-  <b-container class="add-cryptos">
+  <div class="add-cryptos">
     <h4>Add your cryptocoins</h4>
     <b-row>
       <b-col sm="12" md="12" lg="12">
@@ -10,7 +10,7 @@
         <button type="button" name="button" @click="addCrypto">Add</button>
       </b-col>
     </b-row>
-  </b-container>
+  </div>
 </template>
 
 <script>

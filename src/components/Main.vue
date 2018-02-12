@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <b-container class="main">
     <AppHeader></AppHeader>
     <AddCryptos></AddCryptos>
     <CryptoList></CryptoList>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -20,6 +20,7 @@
   import AppHeader from '@/components/layouts/Header';
   import AddCryptos from '@/components/AddCrypto';
   import CryptoList from '@/components/CryptoList';
+  import bContainer from 'bootstrap-vue/es/components/layout/container';
   import { cryptostorage } from '../helpers/utils';
   import { getPrice, getPriceForTimestamp } from '../api/crypto';
 
@@ -92,7 +93,10 @@
       }
     },
     components: {
-      AppHeader, AddCryptos, CryptoList
+      AppHeader,
+      AddCryptos,
+      CryptoList,
+      'b-container': bContainer,
     },
     mounted() {
       this.getHistoricPrice();
@@ -104,6 +108,12 @@
 </script>
 
 <style lang="scss" scoped>
+
+  .container {
+    background: #40414E;
+    background: linear-gradient(135deg, #40414E 0%,#1F1F2C 100%);
+  }
+
   .computed-crypto {
     text-align: center;
     ul {

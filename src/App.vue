@@ -36,6 +36,7 @@ export default {
     outline: 0;
   }
   .container {
-    background: #FFFFFF;
+    // background: #40414E;
+    // background: linear-gradient(135deg, #40414E 0%,#1F1F2C 100%);
   }
 </style>
