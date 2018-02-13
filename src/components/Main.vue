@@ -108,8 +108,9 @@
 <style lang="scss" scoped>
 
   .container {
-    background: #40414E;
-    background: linear-gradient(135deg, #40414E 0%,#1F1F2C 100%);
+    background: #FFFFFF;
+    background: linear-gradient(135deg, #FFF 0%,#FFFFFF 100%);
+    padding: 0;
   }
 
   .computed-crypto {

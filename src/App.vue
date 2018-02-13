@@ -21,7 +21,7 @@ export default {
     font-family: "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
     font-size: 14px;
     line-height: 1.42857143;
-    background: #f9f9f9;
+    background: #F9F9F9;
     color: #000000;
   }
   input.cc-input {
@@ -34,9 +34,5 @@ export default {
     min-height: 40px;
     border: 2px solid #CCCCCC;
     outline: 0;
-  }
-  .container {
-    // background: #40414E;
-    // background: linear-gradient(135deg, #40414E 0%,#1F1F2C 100%);
   }
 </style>
