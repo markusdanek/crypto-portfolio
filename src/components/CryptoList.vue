@@ -1,5 +1,6 @@
 <template>
-  <b-container class="computed-crypto" v-show="cryptos.length" v-cloak>
+  <div class="computed-crypto" v-show="cryptos.length" v-cloak>
+    <pre>{{ $data }}</pre>
     <b-row>
       <b-col sm="12" md="12" lg="12" offset="1">
         <h5>Your cryptocurrencies:</h5>
@@ -14,27 +15,30 @@
         </b-row>
       </b-col>
     </b-row>
-  </b-container>
+  </div>
 </template>
 
 <script>
 
+  Array.prototype.groupBy = function(prop) {
+    return this.reduce(function(groups, item) {
+      var val = item[prop];
+      groups[val] = groups[val] || [];
+      groups[val].push(item);
+      return groups;
+    }, {});
+  }
+
   import Vue from 'vue';
   import { getPrice, getPriceForTimestamp } from '../api/crypto';
   import { cryptostorage } from '../helpers/utils';
-
-  import bContainer from 'bootstrap-vue/es/components/layout/container';
-  import bRow from 'bootstrap-vue/es/components/layout/row';
-  import bCol from 'bootstrap-vue/es/components/layout/col';
-  import bCollapse from 'bootstrap-vue/es/components/collapse/collapse';
-  // import bButton from 'bootstrap-vue/es/components/button/button';
-  // import bToggle from 'bootstrap-vue/es/directives/toggle/toggle';
 
   export default {
     name: 'CryptoList',
     data () {
       return {
         cryptos: cryptostorage.fetch(),
+        cryptoGrouped: ''
       }
     },
     watch: {
@@ -51,15 +55,10 @@
       }
     },
     components: {
-      'b-container': bContainer,
-      'b-row': bRow,
-      'b-col': bCol
-      // 'b-btn': bButton,
-      // 'b-collapse': bCollapse
+    },
+    mounted() {
+      this.cryptoGrouped = this.cryptos.groupBy('title');
     }
-    // directives: {
-    //   'b-toggle': bToggle
-    // }
   }
 </script>
 
