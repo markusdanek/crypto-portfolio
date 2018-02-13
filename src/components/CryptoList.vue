@@ -23,13 +23,6 @@
   import { getPrice, getPriceForTimestamp } from '../api/crypto';
   import { cryptostorage } from '../helpers/utils';
 
-  import bContainer from 'bootstrap-vue/es/components/layout/container';
-  import bRow from 'bootstrap-vue/es/components/layout/row';
-  import bCol from 'bootstrap-vue/es/components/layout/col';
-  import bCollapse from 'bootstrap-vue/es/components/collapse/collapse';
-  // import bButton from 'bootstrap-vue/es/components/button/button';
-  // import bToggle from 'bootstrap-vue/es/directives/toggle/toggle';
-
   export default {
     name: 'CryptoList',
     data () {
@@ -51,15 +44,7 @@
       }
     },
     components: {
-      'b-container': bContainer,
-      'b-row': bRow,
-      'b-col': bCol
-      // 'b-btn': bButton,
-      // 'b-collapse': bCollapse
     }
-    // directives: {
-    //   'b-toggle': bToggle
-    // }
   }
 </script>
 

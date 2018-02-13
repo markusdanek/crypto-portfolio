@@ -17,9 +17,6 @@
 
   import { cryptostorage } from '../helpers/utils';
   import Datepicker from 'vuejs-datepicker';
-  import bContainer from 'bootstrap-vue/es/components/layout/container';
-  import bRow from 'bootstrap-vue/es/components/layout/row';
-  import bCol from 'bootstrap-vue/es/components/layout/col';
 
   export default {
     name: 'AddCryptos',
@@ -63,10 +60,7 @@
       }
     },
     components: {
-      Datepicker,
-      'b-container': bContainer,
-      'b-row': bRow,
-      'b-col': bCol
+      Datepicker
     }
   }
 </script>

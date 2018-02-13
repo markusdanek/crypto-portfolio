@@ -20,7 +20,6 @@
   import AppHeader from '@/components/layouts/Header';
   import AddCryptos from '@/components/AddCrypto';
   import CryptoList from '@/components/CryptoList';
-  import bContainer from 'bootstrap-vue/es/components/layout/container';
   import { cryptostorage } from '../helpers/utils';
   import { getPrice, getPriceForTimestamp } from '../api/crypto';
 
@@ -95,8 +94,7 @@
     components: {
       AppHeader,
       AddCryptos,
-      CryptoList,
-      'b-container': bContainer,
+      CryptoList
     },
     mounted() {
       this.getHistoricPrice();

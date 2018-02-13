@@ -7,12 +7,11 @@
 
 <script>
   import PortfolioValue from '@/components/PortfolioValue';
-  import bContainer from 'bootstrap-vue/es/components/layout/container';
+
   export default {
     name: 'Header',
     components: {
-      PortfolioValue,
-      'b-container': bContainer,
+      PortfolioValue
     }
   }
 </script>
