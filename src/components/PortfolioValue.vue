@@ -67,6 +67,7 @@
         for (let i = 0; i < this.cryptos.length; i++) {
           this.portfolioValuePurchase+=this.cryptos[i].purchaseValueFiat;
         }
+        this.portfolioValuePurchase = this.portfolioValuePurchase.toFixed(2);
       },
       valuePortfolioToday(){
         this.portfolioValueToday = 0;
@@ -97,6 +98,7 @@
         this.portfolioValueYesterdayPercent = (valueFiat / this.portfolioValueYesterday) * 100;
         this.portfolioValueYesterdayPercent = this.portfolioValueYesterdayPercent.toFixed(2);
         this.portfolioValueYesterdayPercent = this.portfolioValueYesterdayPercent * -1;
+
         if(this.portfolioValueYesterdayPercent > 0) {
           this.isPositivYesterday = true;
         } else {

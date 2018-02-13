@@ -7,15 +7,6 @@
 </template>
 
 <script>
-  Array.prototype.groupBy = function(prop) {
-    return this.reduce(function(groups, item) {
-      var val = item[prop];
-      groups[val] = groups[val] || [];
-      groups[val].push(item);
-      return groups;
-    }, {});
-  }
-
   import Vue from 'vue';
   import AppHeader from '@/components/layouts/Header';
   import AddCryptos from '@/components/AddCrypto';
@@ -27,8 +18,7 @@
     name: 'Main',
     data () {
       return {
-        cryptos: cryptostorage.fetch(),
-        cryptoGrouped: ''
+        cryptos: cryptostorage.fetch()
       }
     },
     watch: {
@@ -47,7 +37,6 @@
             Vue.set(this.cryptos[i], 'purchaseDatePrice', values[0]);
           }).catch(e => console.error(e));
         }
-        this.cryptoGrouped = this.cryptos.groupBy('title');
       },
       getPriceForAmount(){
         let cryptoValue = 0;

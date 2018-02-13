@@ -2,12 +2,14 @@
   <div class="add-cryptos">
     <h4>Add your cryptocoins</h4>
     <b-row>
-      <b-col sm="12" md="12" lg="12">
-        <input autofocus autocomplete="off" placeholder="Name (BTC)" v-model="newcrypto">
-        <input autocomplete="off" placeholder="Amount (0.001)" v-model="cryptoAmount" @keyup.enter="addCrypto">
-        <input autocomplete="off" placeholder="Currency (USD)" v-model="cryptoCurrency" @keyup.enter="addCrypto">
-        <datepicker input-class="cc-input" v-model="cryptoDate" name="cryptoDate" placeholder="Date of purchase"></datepicker>
-        <button type="button" name="button" @click="addCrypto">Add</button>
+      <b-col sm="12" md="10" lg="10" offset-md="1">
+        <b-form inline>
+          <b-input autofocus class="mb-2 mr-sm-2 mb-sm-2" id="cryptoName" placeholder="Name (BTC)" v-model="newcrypto" />
+          <b-input class="mb-2 mr-sm-2 mb-sm-2" id="cryptoAmount" placeholder="Amount (0.001)" v-model="cryptoAmount" @keyup.enter="addCrypto" />
+          <b-input class="mb-2 mr-sm-2 mb-sm-2" id="cryptoCurrency" placeholder="Currency (USD)" v-model="cryptoCurrency" @keyup.enter="addCrypto" />
+          <datepicker input-class="cc-input mb-2 mr-sm-2 mb-sm-2" v-model="cryptoDate" name="cryptoDate" placeholder="Date of purchase"></datepicker>
+          <b-button name="addCrypto" variant="primary" @click="addCrypto">Add Coin</b-button>
+        </b-form>
       </b-col>
     </b-row>
   </div>
@@ -68,34 +70,28 @@
 <style lang="scss" scoped>
   .add-cryptos {
     text-align: center;
-    padding-top: 25px;
+    padding: 50px 0 25px 0;
     h4 {
       margin-bottom: 20px;
     }
     .vdp-datepicker {
       display: inline-block;
     }
-    input{
-      font-size: 1rem;
-      font-weight: 400;
-      color: #4965C3;
-      padding-top: 0;
-      padding-right: 10px;
-      padding-bottom: 0;
-      padding-left: 10px;
-      box-sizing: border-box;
-      width: 150px;
-      min-height: 40px;
-      border: 2px solid #ccc;
-      outline: 0;
+    @media (max-width: 576px) {
+      .vdp-datepicker {
+        display: block;
+        width: 100%;
+      }
     }
-    button {
-      background: #4965C3;
-      color: #FFF;
-      border: none;
-      outline: 0;
-      height: 40px;
-      padding: 10px;
+    .form-inline {
+      button {
+        position: relative;
+        top: -4px;
+        background: #4965C3;
+        &:hover {
+          background: #4B57A8;
+        }
+      }
     }
   }
 </style>

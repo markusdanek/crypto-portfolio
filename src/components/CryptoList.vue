@@ -1,5 +1,6 @@
 <template>
   <div class="computed-crypto" v-show="cryptos.length" v-cloak>
+    <pre>{{ $data }}</pre>
     <b-row>
       <b-col sm="12" md="12" lg="12" offset="1">
         <h5>Your cryptocurrencies:</h5>
@@ -19,6 +20,15 @@
 
 <script>
 
+  Array.prototype.groupBy = function(prop) {
+    return this.reduce(function(groups, item) {
+      var val = item[prop];
+      groups[val] = groups[val] || [];
+      groups[val].push(item);
+      return groups;
+    }, {});
+  }
+
   import Vue from 'vue';
   import { getPrice, getPriceForTimestamp } from '../api/crypto';
   import { cryptostorage } from '../helpers/utils';
@@ -28,6 +38,7 @@
     data () {
       return {
         cryptos: cryptostorage.fetch(),
+        cryptoGrouped: ''
       }
     },
     watch: {
@@ -44,6 +55,9 @@
       }
     },
     components: {
+    },
+    mounted() {
+      this.cryptoGrouped = this.cryptos.groupBy('title');
     }
   }
 </script>
