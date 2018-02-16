@@ -18,19 +18,6 @@
             </span>
           </p>
         </div>
-        <!-- <div class="portfolio-stats">
-          <div class="portfolio-stats--purchase">
-            <p>
-              Purchase value: {{ portfolioValuePurchase }}
-            </p>
-          </div>
-          <div class="portfolio-stats--yesterday">
-            <p>
-              Yesterday: {{ portfolioValueYesterday }}
-              <span class="percentage" v-bind:class="{ positive: isPositivYesterday }">{{ portfolioValueYesterdayPercent }}</span>
-            </p>
-          </div>
-        </div> -->
       </div>
       <div class="intro" v-else>
         <img src="static/logo.png" alt="" width="50">
@@ -57,7 +44,7 @@
 
         portfolioValueYesterday: '',
         portfolioValueYesterdayPercent: '',
-        isPositivYesterday: false,
+        isPositivYesterday: false
       }
     },
     props: ['portfolio'],
@@ -164,38 +151,5 @@
         }
       }
     }
-    // .portfolio-stats {
-    //   display: grid;
-    //   grid-template-columns: 50% 50%;
-    //   grid-gap: 0px;
-    //   &--purchase {
-    //     text-align: right;
-    //     margin-right: 20px;
-    //     p {
-    //       font-size: 20px;
-    //       span {
-    //         position: relative;
-    //         top: -3px;
-    //         background: #4B57A8;
-    //         padding: 5px;
-    //         font-size: 15px;
-    //       }
-    //     }
-    //   }
-    //   &--yesterday {
-    //     text-align: left;
-    //     margin-left: 20px;
-    //     p {
-    //       font-size: 20px;
-    //       span {
-    //         position: relative;
-    //         top: -3px;
-    //         background: #4B57A8;
-    //         padding: 5px;
-    //         font-size: 15px;
-    //       }
-    //     }
-    //   }
-    // }
   }
 </style>

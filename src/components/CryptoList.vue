@@ -1,6 +1,5 @@
 <template>
   <div class="computed-crypto" v-show="cryptos.length" v-cloak>
-    <pre>{{ $data }}</pre>
     <b-row>
       <b-col sm="12" md="12" lg="12" offset="1">
         <h5>Your cryptocurrencies:</h5>
@@ -8,11 +7,13 @@
     </b-row>
     <b-row>
       <b-col sm="12" md="12" lg="12" offset="1">
-        <b-row v-for="crypto in cryptos" :key="crypto.id" class="crypto-item">
-          <b-col sm="3" md="3" lg="1">{{ crypto.title }}</b-col>
-          <b-col sm="3" md="3" lg="1">{{ crypto.amount }}</b-col>
-          <b-col sm="3" md="3" lg="1"><button class="destroy" @click="removeCrypto(crypto)">Delete</button></b-col>
-        </b-row>
+        <div v-for="crypto in cryptoGrouped" :key="crypto.id" class="crypto-item">
+          <b-row v-for="coin in crypto" :key="coin.id">
+            <b-col sm="3" md="3" lg="1">{{ coin.title }}</b-col>
+            <b-col sm="3" md="3" lg="1">{{ coin.amount }}</b-col>
+            <b-col sm="3" md="3" lg="1"><button class="destroy" @click="removeCrypto(crypto)">Delete</button></b-col>
+          </b-row>
+        </div>
       </b-col>
     </b-row>
   </div>
@@ -53,8 +54,6 @@
       removeCrypto(crypto) {
         this.cryptos.splice(this.cryptos.indexOf(crypto), 1)
       }
-    },
-    components: {
     },
     mounted() {
       this.cryptoGrouped = this.cryptos.groupBy('title');
