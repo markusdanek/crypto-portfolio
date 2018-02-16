@@ -25,17 +25,23 @@
           coinTitle.push(title)
         }
 
-        let sum = [];
+        let sumPurchase = [];
+        let sumToday = [];
         for (var i = 0; i < coinTitle.length; i++) {
           console.log(coinTitle[i]);
-          let sumTemp = [];
+          let sumTempPurchase = [];
+          let sumTempToday = [];
           for (var j = 0; j < this.test1[coinTitle[i]].length; j++) {
             let currentTitle = this.test1[coinTitle[i]][j].title;
             let purchaseValue = this.test1[coinTitle[i]][j].purchaseValueFiat;
-            sumTemp.push(purchaseValue);
-            sum = sumTemp.reduce((pv, cv) => pv+cv, 0);
+            let priceToday = this.test1[coinTitle[i]][j].priceToday * this.test1[coinTitle[i]][j].amount;
+            sumTempPurchase.push(purchaseValue);
+            sumTempToday.push(priceToday);
+            sumPurchase = sumTempPurchase.reduce((pv, cv) => pv+cv, 0);
+            sumToday = sumTempToday.reduce((pv, cv) => pv+cv, 0);
           }
-          console.log("Purchase value in USD: ", sum);
+          console.log("PurchaseValueUSD: ", sumPurchase);
+          console.log("TodayValueUSD: ", sumToday);
         }
       }
     },
