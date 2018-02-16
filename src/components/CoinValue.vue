@@ -1,52 +1,63 @@
 <template>
   <div>
     <pre>{{ $data }}</pre>
+    <div v-for="crypto in cryptoOverview">
+      <div class="">
+
+      </div>
+      {{crypto.cryptoTitle}}, {{crypto.purchaseValueUSD}}, {{crypto.todayValueUSD}}
+    </div>
   </div>
 </template>
 
 <script>
-  import { cryptostorage } from '../helpers/utils';
+  import {
+    cryptostorage
+  } from '../helpers/utils';
 
   export default {
     name: 'CryptoValue',
-    data () {
+    data() {
       return {
         cryptos: cryptostorage.fetch(),
-        test1: ''
+        cryptoOverview: ''
       }
     },
     methods: {
-      getCryptoData(){
-        this.test1 = this.cryptos.groupBy('title');
+      getCryptoData() {
+        let cryptoGrouped = this.cryptos.groupBy('title');
         let coinTitle = [];
-
-        // $coinTitle[] contains title of available coins in grouped $cryptos
-        for (var title in this.test1) {
+        for (var title in cryptoGrouped) {
           coinTitle.push(title)
         }
-
         let sumPurchase = [];
         let sumToday = [];
+        let cryptoArray = [];
         for (var i = 0; i < coinTitle.length; i++) {
-          console.log(coinTitle[i]);
           let sumTempPurchase = [];
           let sumTempToday = [];
-          for (var j = 0; j < this.test1[coinTitle[i]].length; j++) {
-            let currentTitle = this.test1[coinTitle[i]][j].title;
-            let purchaseValue = this.test1[coinTitle[i]][j].purchaseValueFiat;
-            let priceToday = this.test1[coinTitle[i]][j].priceToday * this.test1[coinTitle[i]][j].amount;
+          for (var j = 0; j < cryptoGrouped[coinTitle[i]].length; j++) {
+            let currentTitle = cryptoGrouped[coinTitle[i]][j].title;
+            let purchaseValue = cryptoGrouped[coinTitle[i]][j].purchaseValueFiat;
+            let priceToday = cryptoGrouped[coinTitle[i]][j].priceToday * cryptoGrouped[coinTitle[i]][j].amount;
             sumTempPurchase.push(purchaseValue);
             sumTempToday.push(priceToday);
-            sumPurchase = sumTempPurchase.reduce((pv, cv) => pv+cv, 0);
-            sumToday = sumTempToday.reduce((pv, cv) => pv+cv, 0);
+            sumPurchase = sumTempPurchase.reduce((pv, cv) => pv + cv, 0);
+            sumToday = sumTempToday.reduce((pv, cv) => pv + cv, 0);
+            sumPurchase = sumPurchase.toFixed(2);
+            sumToday = sumToday.toFixed(2);
           }
-          console.log("PurchaseValueUSD: ", sumPurchase);
-          console.log("TodayValueUSD: ", sumToday);
+          cryptoArray.push({
+            cryptoTitle: coinTitle[i],
+            purchaseValueUSD: sumPurchase,
+            todayValueUSD: sumToday
+          });
         }
+        return cryptoArray;
       }
     },
     mounted() {
-      this.getCryptoData();
+      this.cryptoOverview = this.getCryptoData();
     }
   }
 </script>

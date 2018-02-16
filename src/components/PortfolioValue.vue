@@ -14,7 +14,7 @@
           </p>
           <p v-else>
             <span class="portfolioNegative">
-              {{ portfolioValueToday - portfolioValuePurchase }} ({{ portfolioValueTodayPercent }}%)
+              {{ portfolioValueToday - portfolioValuePurchase | round(2) }} ({{ portfolioValueTodayPercent }}%)
             </span>
           </p>
         </div>
@@ -48,6 +48,18 @@
       }
     },
     props: ['portfolio'],
+    filters: {
+      round: function(value, decimals){
+        if(!value) {
+          value = 0;
+        }
+        if(!decimals) {
+          decimals = 0;
+        }
+        value = Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
+        return value;
+      }
+    },
     methods: {
       valuePortfolioPurchase(){
         this.portfolioValuePurchase = 0;
