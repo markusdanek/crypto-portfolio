@@ -35,6 +35,7 @@
           let historicPrice = getPriceForTimestamp(this.cryptos[i].title, this.cryptos[i].purchaseDate, this.cryptos[i].currency);
           Promise.all([historicPrice]).then((values) => {
             Vue.set(this.cryptos[i], 'purchaseDatePrice', values[0]);
+            console.log("getHistoricPrice finished");
           }).catch(e => console.error(e));
         }
       },
@@ -50,6 +51,7 @@
           }
           Vue.set(this.cryptos[i], 'purchaseValueFiat', value);
         }
+        console.log("getPriceForAmount finished");
       },
       getPriceForToday(){
         let priceToday = [];
@@ -58,6 +60,7 @@
             .then((values)=>{
               priceToday.push(values);
               Vue.set(this.cryptos[i], 'priceToday', values);
+              console.log("getPriceForToday finished");
             }).catch((err)=>{
                 return err;
           });
@@ -74,6 +77,7 @@
             .then((values) => {
               priceYesterday.push(values);
               Vue.set(this.cryptos[i], 'priceYesterday', values);
+              console.log("getPriceForYesterday finished");
             }).catch((err)=>{
                 return err;
           });
