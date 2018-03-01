@@ -16,8 +16,8 @@
 </template>
 
 <script>
-
   import { cryptostorage } from '../helpers/utils';
+  import { getPriceForTimestamp } from '../api/crypto';
   import Datepicker from 'vuejs-datepicker';
 
   export default {
@@ -45,16 +45,26 @@
         let amount = this.cryptoAmount && this.cryptoAmount.trim();
         let date = this.cryptoDate;
         let currency = this.cryptoCurrency;
-        if (!title) {
-          return
-        }
-        this.cryptos.push({
-          id: cryptostorage.uid++,
-          title: title,
-          amount: amount,
-          currency: currency,
-          purchaseDate: date
-        });
+        let historicPrice = getPriceForTimestamp(title, new Date(date).toISOString(), currency);
+        Promise.all([historicPrice]).then((values) => {
+          let cryptoValue = 0;
+          let cryptoAmount = amount;
+          let cryptoPrice = values[0];
+          let value;
+          if(cryptoAmount != null && cryptoPrice != null){
+            value = parseInt(cryptoAmount * cryptoPrice);
+            cryptoValue+=value;
+          }
+          this.cryptos.push({
+            id: cryptostorage.uid++,
+            title: title,
+            amount: amount,
+            currency: currency,
+            purchaseDate: date,
+            purchaseDatePrice: values[0],
+            purchaseValueFiat: cryptoValue
+          });
+        }).catch(e => console.error(e));
         this.newcrypto = '';
         this.cryptoAmount = '';
         this.cryptoDate = '';

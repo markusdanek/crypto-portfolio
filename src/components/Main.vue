@@ -30,29 +30,6 @@
       }
     },
     methods: {
-      getHistoricPrice() {
-        for (let i = 0; i < this.cryptos.length; i++) {
-          let historicPrice = getPriceForTimestamp(this.cryptos[i].title, this.cryptos[i].purchaseDate, this.cryptos[i].currency);
-          Promise.all([historicPrice]).then((values) => {
-            Vue.set(this.cryptos[i], 'purchaseDatePrice', values[0]);
-            console.log("getHistoricPrice finished");
-          }).catch(e => console.error(e));
-        }
-      },
-      getPriceForAmount(){
-        let cryptoValue = 0;
-        for (let i = 0; i < this.cryptos.length; i++) {
-          let cryptoAmount = this.cryptos[i].amount;
-          let cryptoPrice = this.cryptos[i].purchaseDatePrice;
-          let value;
-          if(cryptoAmount != null && cryptoPrice != null){
-            value = parseInt(cryptoAmount * cryptoPrice);
-            cryptoValue+=value;
-          }
-          Vue.set(this.cryptos[i], 'purchaseValueFiat', value);
-        }
-        console.log("getPriceForAmount finished");
-      },
       getPriceForToday(){
         let priceToday = [];
         for (let i = 0; i < this.cryptos.length; i++) {
@@ -90,8 +67,8 @@
       CryptoList
     },
     mounted() {
-      this.getHistoricPrice();
-      this.getPriceForAmount();
+      // this.getHistoricPrice();
+      // this.getPriceForAmount();
       this.getPriceForToday();
       this.getPriceForYesterday();
     }
