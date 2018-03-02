@@ -1,5 +1,9 @@
 <template>
   <b-container class="main">
+    <pre>
+      Main.vue:
+      {{ $data }}
+    </pre>
     <AppHeader></AppHeader>
     <AddCryptos></AddCryptos>
     <CryptoList></CryptoList>
@@ -18,7 +22,9 @@
     name: 'Main',
     data () {
       return {
-        cryptos: cryptostorage.fetch()
+        cryptos: cryptostorage.fetch(),
+        loadingToday: false,
+        loadingYesterday: false
       }
     },
     watch: {
@@ -31,19 +37,21 @@
     },
     methods: {
       getPriceForToday(){
+        this.loadingToday = true;
         let priceToday = [];
         for (let i = 0; i < this.cryptos.length; i++) {
           let priceTodayPromise = getPrice(this.cryptos[i].title, this.cryptos[i].currency)
             .then((values)=>{
               priceToday.push(values);
               Vue.set(this.cryptos[i], 'priceToday', values);
-              console.log("getPriceForToday finished");
+              this.loadingToday = false;
             }).catch((err)=>{
                 return err;
           });
         }
       },
       getPriceForYesterday(){
+        this.loadingYesterday = true;
         let priceYesterday = [];
         for (let i = 0; i < this.cryptos.length; i++) {
           let today = new Date();
@@ -54,7 +62,7 @@
             .then((values) => {
               priceYesterday.push(values);
               Vue.set(this.cryptos[i], 'priceYesterday', values);
-              console.log("getPriceForYesterday finished");
+              this.loadingYesterday = false;
             }).catch((err)=>{
                 return err;
           });

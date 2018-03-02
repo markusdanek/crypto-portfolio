@@ -1,5 +1,9 @@
 <template>
   <div>
+    <pre>
+      PortfolioValue.vue:
+      {{ $data }}
+    </pre>
     <section class="portfolio-value">
       <div v-if="portfolioValueToday > 0">
         <div class="portfolio-value--today">
@@ -36,14 +40,14 @@
     data () {
       return {
         cryptos: cryptostorage.fetch(),
-        portfolioValuePurchase: '',
+        portfolioValuePurchase: 0,
 
-        portfolioValueToday: '',
-        portfolioValueTodayPercent: '',
+        portfolioValueToday: 0,
+        portfolioValueTodayPercent: 0,
         isPositivToday: false,
 
-        portfolioValueYesterday: '',
-        portfolioValueYesterdayPercent: '',
+        portfolioValueYesterday: 0,
+        portfolioValueYesterdayPercent: 0,
         isPositivYesterday: false
       }
     },
@@ -62,25 +66,33 @@
     },
     methods: {
       valuePortfolioPurchase(){
-        this.portfolioValuePurchase = 0;
+        let tempSum = 0;
         for (let i = 0; i < this.cryptos.length; i++) {
-          this.portfolioValuePurchase+=this.cryptos[i].purchaseValueFiat;
+          tempSum+=this.cryptos[i].purchaseValueFiat;
         }
-        this.portfolioValuePurchase = this.portfolioValuePurchase.toFixed(2);
+        this.portfolioValuePurchase = tempSum.toFixed(2);
       },
       valuePortfolioToday(){
-        this.portfolioValueToday = 0;
+        let tempSumToday = 0;
         for (let i = 0; i < this.cryptos.length; i++) {
           let amountTodayDollar = this.cryptos[i].priceToday * this.cryptos[i].amount;
-          this.portfolioValueToday+=amountTodayDollar;
+          console.log("pricetoday", this.cryptos[i].priceToday);
+          console.log("pricetoday", typeof this.cryptos[i].priceToday);
+          console.log("amount", typeof this.cryptos[i].amount);
+          console.log("amountTodayDollar", amountTodayDollar);
+          tempSumToday+=amountTodayDollar;
         }
-        this.portfolioValueToday = this.portfolioValueToday.toFixed(2);
-        let valueFiat = this.portfolioValuePurchase - this.portfolioValueToday;
-        this.portfolioValueTodayPercent = (valueFiat / this.portfolioValueToday) * 100;
-        this.portfolioValueTodayPercent = this.portfolioValueTodayPercent.toFixed(2);
-        this.portfolioValueTodayPercent = this.portfolioValueTodayPercent * -1;
+        this.portfolioValueToday = tempSumToday;
+        console.log(this.portfolioValueToday);
 
-        if(this.portfolioValueTodayPercent > 0) {
+        let valueFiat = this.portfolioValuePurchase - tempSumToday;
+        let tempPctToday = 0;
+        tempPctToday = (valueFiat / tempSumToday) * 100;
+        tempPctToday = tempPctToday.toFixed(2);
+        tempPctToday = tempPctToday * -1;
+        this.portfolioValueTodayPercent = tempPctToday;
+
+        if(tempPctToday > 0) {
           this.isPositivToday = true;
         } else {
           this.isPositivToday = false;
@@ -91,6 +103,7 @@
         for (let i = 0; i < this.cryptos.length; i++) {
           let amountYesterdayDollar = this.cryptos[i].priceYesterday * this.cryptos[i].amount;
           this.portfolioValueYesterday+=amountYesterdayDollar;
+          console.log("FOR valuePortfolioYesterday finished");
         }
         this.portfolioValueYesterday = this.portfolioValueYesterday.toFixed(2);
         let valueFiat = this.portfolioValueToday - this.portfolioValueYesterday;
@@ -103,6 +116,7 @@
         } else {
           this.isPositivYesterday = false;
         }
+        console.log("valuePortfolioYesterday finished");
       }
     },
     mounted() {

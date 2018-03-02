@@ -1,5 +1,9 @@
 <template>
   <div class="add-cryptos">
+    <pre>
+      AddCrypto.vue:
+      {{ $data }}
+    </pre>
     <h4>Add your cryptocoins</h4>
     <b-row>
       <b-col sm="12" md="10" lg="10" offset-md="1">
@@ -16,13 +20,13 @@
 </template>
 
 <script>
-  import { cryptostorage } from '../helpers/utils';
-  import { getPriceForTimestamp } from '../api/crypto';
+  import {cryptostorage} from '../helpers/utils';
+  import {getPrice, getPriceForTimestamp} from '../api/crypto';
   import Datepicker from 'vuejs-datepicker';
 
   export default {
     name: 'AddCryptos',
-    data () {
+    data() {
       return {
         cryptos: cryptostorage.fetch(),
         newcrypto: '',
@@ -51,10 +55,19 @@
           let cryptoAmount = amount;
           let cryptoPrice = values[0];
           let value;
-          if(cryptoAmount != null && cryptoPrice != null){
+          if (cryptoAmount != null && cryptoPrice != null) {
             value = parseInt(cryptoAmount * cryptoPrice);
-            cryptoValue+=value;
+            cryptoValue += value;
           }
+
+          let priceToday = [];
+          let priceTodayPromise = getPrice(title, currency)
+            .then((values)=>{
+              priceToday.push(values);
+            }).catch((err)=>{
+                return err;
+          });
+
           this.cryptos.push({
             id: cryptostorage.uid++,
             title: title,
@@ -62,13 +75,27 @@
             currency: currency,
             purchaseDate: date,
             purchaseDatePrice: values[0],
-            purchaseValueFiat: cryptoValue
+            purchaseValueFiat: cryptoValue,
+            priceToday: priceToday[0]
           });
+
         }).catch(e => console.error(e));
         this.newcrypto = '';
         this.cryptoAmount = '';
         this.cryptoDate = '';
         this.cryptoCurrency = '';
+      },
+      getPriceForToday(){
+        let priceToday = [];
+        for (let i = 0; i < this.cryptos.length; i++) {
+          let priceTodayPromise = getPrice(this.cryptos[i].title, this.cryptos[i].currency)
+            .then((values)=>{
+              priceToday.push(values);
+              Vue.set(this.cryptos[i], 'priceToday', values);
+            }).catch((err)=>{
+                return err;
+          });
+        }
       }
     },
     components: {
@@ -80,12 +107,12 @@
 <style lang="scss" scoped>
   .add-cryptos {
     text-align: center;
-    padding: 50px 0 25px 0;
+    padding: 50px 0 25px;
     h4 {
       margin-bottom: 20px;
     }
     .vdp-datepicker {
-      display: inline-block;
+        display: inline-block;
     }
     @media (max-width: 576px) {
       .vdp-datepicker {

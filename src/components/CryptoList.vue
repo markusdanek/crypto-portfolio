@@ -30,7 +30,6 @@
     }, {});
   }
 
-  import Vue from 'vue';
   import { getPrice, getPriceForTimestamp } from '../api/crypto';
   import { cryptostorage } from '../helpers/utils';
 
