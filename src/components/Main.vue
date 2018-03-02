@@ -1,9 +1,9 @@
 <template>
   <b-container class="main">
-    <pre>
+    <!-- <pre>
       Main.vue:
       {{ $data }}
-    </pre>
+    </pre> -->
     <AppHeader></AppHeader>
     <AddCryptos></AddCryptos>
     <CryptoList></CryptoList>
@@ -75,8 +75,6 @@
       CryptoList
     },
     mounted() {
-      // this.getHistoricPrice();
-      // this.getPriceForAmount();
       this.getPriceForToday();
       this.getPriceForYesterday();
     }

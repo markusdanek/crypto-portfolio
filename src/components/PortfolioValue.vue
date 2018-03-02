@@ -1,9 +1,9 @@
 <template>
   <div>
-    <pre>
+    <!-- <pre>
       PortfolioValue.vue:
       {{ $data }}
-    </pre>
+    </pre> -->
     <section class="portfolio-value">
       <div v-if="portfolioValueToday > 0">
         <div class="portfolio-value--today">
@@ -41,11 +41,9 @@
       return {
         cryptos: cryptostorage.fetch(),
         portfolioValuePurchase: 0,
-
         portfolioValueToday: 0,
         portfolioValueTodayPercent: 0,
         isPositivToday: false,
-
         portfolioValueYesterday: 0,
         portfolioValueYesterdayPercent: 0,
         isPositivYesterday: false
@@ -76,14 +74,9 @@
         let tempSumToday = 0;
         for (let i = 0; i < this.cryptos.length; i++) {
           let amountTodayDollar = this.cryptos[i].priceToday * this.cryptos[i].amount;
-          console.log("pricetoday", this.cryptos[i].priceToday);
-          console.log("pricetoday", typeof this.cryptos[i].priceToday);
-          console.log("amount", typeof this.cryptos[i].amount);
-          console.log("amountTodayDollar", amountTodayDollar);
           tempSumToday+=amountTodayDollar;
         }
         this.portfolioValueToday = tempSumToday;
-        console.log(this.portfolioValueToday);
 
         let valueFiat = this.portfolioValuePurchase - tempSumToday;
         let tempPctToday = 0;
@@ -103,7 +96,6 @@
         for (let i = 0; i < this.cryptos.length; i++) {
           let amountYesterdayDollar = this.cryptos[i].priceYesterday * this.cryptos[i].amount;
           this.portfolioValueYesterday+=amountYesterdayDollar;
-          console.log("FOR valuePortfolioYesterday finished");
         }
         this.portfolioValueYesterday = this.portfolioValueYesterday.toFixed(2);
         let valueFiat = this.portfolioValueToday - this.portfolioValueYesterday;
@@ -116,7 +108,6 @@
         } else {
           this.isPositivYesterday = false;
         }
-        console.log("valuePortfolioYesterday finished");
       }
     },
     mounted() {

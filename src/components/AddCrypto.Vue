@@ -1,9 +1,9 @@
 <template>
   <div class="add-cryptos">
-    <pre>
+    <!-- <pre>
       AddCrypto.vue:
       {{ $data }}
-    </pre>
+    </pre> -->
     <h4>Add your cryptocoins</h4>
     <b-row>
       <b-col sm="12" md="10" lg="10" offset-md="1">
@@ -49,8 +49,12 @@
         let amount = this.cryptoAmount && this.cryptoAmount.trim();
         let date = this.cryptoDate;
         let currency = this.cryptoCurrency;
+
+        // Get purchase date price
         let historicPrice = getPriceForTimestamp(title, new Date(date).toISOString(), currency);
         Promise.all([historicPrice]).then((values) => {
+
+          // Get purchase value in fiat
           let cryptoValue = 0;
           let cryptoAmount = amount;
           let cryptoPrice = values[0];
@@ -60,10 +64,23 @@
             cryptoValue += value;
           }
 
+          // Get price for today
           let priceToday = [];
           let priceTodayPromise = getPrice(title, currency)
             .then((values)=>{
               priceToday.push(values);
+            }).catch((err)=>{
+                return err;
+          });
+
+          // Get price for yesterday
+          let priceYesterday = [];
+          let yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          yesterday = yesterday.toISOString();
+          let priceYesterdayPromise = getPriceForTimestamp(title, yesterday, currency)
+            .then((values) => {
+              priceYesterday.push(values);
             }).catch((err)=>{
                 return err;
           });
@@ -76,7 +93,8 @@
             purchaseDate: date,
             purchaseDatePrice: values[0],
             purchaseValueFiat: cryptoValue,
-            priceToday: priceToday[0]
+            priceToday: priceToday,
+            priceYesterday: priceYesterday
           });
 
         }).catch(e => console.error(e));
@@ -84,18 +102,9 @@
         this.cryptoAmount = '';
         this.cryptoDate = '';
         this.cryptoCurrency = '';
-      },
-      getPriceForToday(){
-        let priceToday = [];
-        for (let i = 0; i < this.cryptos.length; i++) {
-          let priceTodayPromise = getPrice(this.cryptos[i].title, this.cryptos[i].currency)
-            .then((values)=>{
-              priceToday.push(values);
-              Vue.set(this.cryptos[i], 'priceToday', values);
-            }).catch((err)=>{
-                return err;
-          });
-        }
+
+        // reload/re-render
+        // this.$forceUpdate();
       }
     },
     components: {

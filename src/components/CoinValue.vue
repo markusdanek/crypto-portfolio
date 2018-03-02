@@ -1,6 +1,9 @@
 <template>
   <div>
-    <pre>{{ $data }}</pre>
+    <!-- <pre>
+      CoinValue.vue:
+      {{ $data }}
+    </pre> -->
     <div v-for="crypto in cryptoOverview">
       <div class="">
 

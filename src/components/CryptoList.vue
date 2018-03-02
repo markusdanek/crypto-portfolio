@@ -1,5 +1,9 @@
 <template>
   <div class="computed-crypto" v-show="cryptos.length" v-cloak>
+    <!-- <pre>
+      CryptoList.vue
+      {{ $data }}
+    </pre> -->
     <b-row>
       <b-col sm="12" md="12" lg="12" offset="1">
         <h5>Your cryptocurrencies:</h5>
