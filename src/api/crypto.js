@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import {getJsonBody} from '../helpers/utils';
+import moment from 'moment';
 
 const ccUrl = 'https://min-api.cryptocompare.com/data'
 const apiUrl = 'https://cryptocoin-api.herokuapp.com'
@@ -29,12 +30,13 @@ export function getPrice(crypto, currency) {
   });
 }
 
-export function getPriceForTimestamp(crypto, day, currency) {
+export function getPriceForTimestamp(crypto, timestamp, currency) {
+  let timestampUnix = moment(timestamp).unix();
   return new Promise((resolve, reject) => {
     Vue.http.get(ccUrl + '/pricehistorical', {
       params: {
         fsym: crypto,
-        day: day,
+        ts: timestampUnix,
         tsyms: currency
       }
     }).then((result) => {

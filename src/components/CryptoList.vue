@@ -13,9 +13,12 @@
       <b-col sm="12" md="12" lg="12" offset="1">
         <div v-for="crypto in cryptoGrouped" :key="crypto.id" class="crypto-item">
           <b-row v-for="coin in crypto" :key="coin.id">
-            <b-col sm="3" md="3" lg="1">{{ coin.title }}</b-col>
-            <b-col sm="3" md="3" lg="1">{{ coin.amount }}</b-col>
-            <b-col sm="3" md="3" lg="1"><button class="destroy" @click="removeCrypto(crypto)">Delete</button></b-col>
+            <b-col sm="2" md="2" lg="1">{{ coin.title }}</b-col>
+            <b-col sm="2" md="2" lg="1">{{ coin.amount }}</b-col>
+            <b-col sm="2" md="2" lg="2">T: {{ coin.priceToday }}</b-col>
+            <b-col sm="2" md="2" lg="2">Y:{{ coin.priceYesterday }}</b-col>
+            <b-col sm="2" md="2" lg="2">P:{{ coin.purchaseDatePrice }}</b-col>
+            <b-col sm="2" md="2" lg="1"><button class="destroy" @click="removeCrypto(crypto)">Delete</button></b-col>
           </b-row>
         </div>
       </b-col>
@@ -34,7 +37,6 @@
     }, {});
   }
 
-  import { getPrice, getPriceForTimestamp } from '../api/crypto';
   import { cryptostorage } from '../helpers/utils';
 
   export default {

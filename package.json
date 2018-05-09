@@ -17,6 +17,7 @@
     "bootstrap-vue": "^2.0.0-rc.1",
     "firebase": "^4.13.1",
     "lodash": "^4.17.10",
+    "moment": "^2.22.1",
     "vue": "^2.5.16",
     "vue-lodash": "^2.0.0",
     "vue-qrcode-reader": "^0.7.3",

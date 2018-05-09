@@ -57,7 +57,8 @@
           let today = new Date();
           let yesterday = new Date();
           yesterday.setDate(yesterday.getDate() - 1);
-          yesterday = yesterday.toISOString();
+          console.log("yesterday", yesterday);
+          // yesterday = yesterday.toISOString();
           let priceYesterdayPromise = getPriceForTimestamp(this.cryptos[i].title, yesterday, this.cryptos[i].currency)
             .then((values) => {
               priceYesterday.push(values);

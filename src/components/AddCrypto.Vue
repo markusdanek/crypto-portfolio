@@ -23,6 +23,7 @@
   import {cryptostorage} from '../helpers/utils';
   import {getPrice, getPriceForTimestamp} from '../api/crypto';
   import Datepicker from 'vuejs-datepicker';
+  import moment from 'moment';
 
   export default {
     name: 'AddCryptos',
@@ -51,9 +52,8 @@
         let currency = this.cryptoCurrency;
 
         // Get purchase date price
-        let historicPrice = getPriceForTimestamp(title, new Date(date).toISOString(), currency);
+        let historicPrice = getPriceForTimestamp(title, date, currency);
         Promise.all([historicPrice]).then((values) => {
-
           // Get purchase value in fiat
           let cryptoValue = 0;
           let cryptoAmount = amount;
@@ -77,7 +77,6 @@
           let priceYesterday = [];
           let yesterday = new Date();
           yesterday.setDate(yesterday.getDate() - 1);
-          yesterday = yesterday.toISOString();
           let priceYesterdayPromise = getPriceForTimestamp(title, yesterday, currency)
             .then((values) => {
               priceYesterday.push(values);
